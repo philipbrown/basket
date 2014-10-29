@@ -309,3 +309,64 @@ To remove a product, pass the SKU to the `remove()` method:
 ``` php
 $basket->remove('abc123');
 ```
+
+## Reconciliation
+Each `Product` object is the product in it's current state. In order to calculate the various totals that an ecommerce application will require, we need to pass it through a reconciliation process.
+
+One of the problems I encounted when researching this package is that people seem to have different opinions of how the reconciliation process should work.
+
+To solve this problem, I've defined a `Reconciler` interface so you an implement your own reconciliation process:
+``` php
+interface Reconciler
+{
+    /**
+     * Return the value of the Product
+     *
+     * @param Product $product
+     * @return Money
+     */
+    public function value(Product $product);
+
+    /**
+     * Return the discount of the Product
+     *
+     * @param Product $product
+     * @return Money
+     */
+    public function discount(Product $product);
+
+    /**
+     * Return the delivery charge of the Product
+     *
+     * @param Product $product
+     * @return Money
+     */
+    public function delivery(Product $product);
+
+    /**
+     * Return the tax of the Product
+     *
+     * @param Product $product
+     * @return Money
+     */
+    public function tax(Product $product);
+
+    /**
+     * Return the subtotal of the Product
+     *
+     * @param Product $product
+     * @return Money
+     */
+    public function subtotal(Product $product);
+
+    /**
+     * Return the total of the Product
+     *
+     * @param Product $product
+     * @return Money
+     */
+    public function total(Product $product);
+}
+```
+
+I've included a `DefaultReconciler` as a standard process for reconciling the items in your basket.
