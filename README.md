@@ -370,3 +370,65 @@ interface Reconciler
 ```
 
 I've included a `DefaultReconciler` as a standard process for reconciling the items in your basket.
+
+## Meta Data
+All ecommerce applications will require meta data about an order such as the number of products, the value of the products and the value of the tax of the order.
+
+Whilst certain types of ecommerce applications will require very little in the way of meta data, other types of applications will require much more in-depth data about each transaction that flows through the system.
+
+In order to not force simple applications to run deep analysis on every order, and also give large applications the freedom to implement their own meta data calculations, each meta data item is optional and it's very easy to define your own.
+
+Each meta data item should be encapsulated as a class and should implement the `MetaData` interface:
+``` php
+interface MetaData
+{
+    /**
+     * Generate the Meta Data
+     *
+     * @param Basket $basket
+     * @return mixed
+     */
+    public function generate(Basket $basket);
+
+    /**
+     * Return the name of the Meta Data
+     *
+     * @return string
+     */
+    public function name();
+}
+```
+
+The `generate()` method accepts an instance of the `Basket` and should return the value of the meta data item you want to return.
+
+The `name()` method should be the name of the object as you want it to appear in the reconciliation output.
+
+This package includes the following meta data items by default:
+- `DeliveryMetaData`
+- `DiscountMetaData`
+- `ProductsMetaData`
+- `SubtotalMetaData`
+- `TaxableMetaData`
+- `TaxMetaData`
+- `TotalMetaData`
+- `ValueMetaData`
+
+## Processing an Order
+Once you are ready to process the items in the `Basket` and turn it into an immutable `Order`, you can use the `Processor` class:
+``` php
+use PhilipBrown\Basket\MetaData\TotalMetaData;
+use PhilipBrown\Basket\MetaData\ProductsMetaData;
+use PhilipBrown\Basket\Reconcilers\DefaultReconciler;
+
+$reconciler = new DefaultReconciler;
+
+$processor  = new Processor($reconciler, [
+    new TotalMetaData($reconciler),
+    new ProductsMetaData
+]);
+
+$order = $processor->process($basket);
+```
+The `Processor` class will run each `MetaData` instance on the basket and turn each `Product` instance into an array of attributes.
+
+You can now use the `Order` object to update your database or send the order to your payment gateway of choice.
