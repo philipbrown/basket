@@ -20,3 +20,27 @@ $money2 = new Money(500, new Currency('USD'));
 $money->add($money2);
 ```
 This package uses [mathiasverraes/money](https://github.com/mathiasverraes/money) by [@mathiasverraes](https://github.com/mathiasverraes) throughout to represent Money and Currency values.
+
+## Tax Rates
+One of the big problems with dealing with international commerce is the fact that almost everyone has their own rules around tax.
+
+To make tax rates interchangeable we can encapsulate them as objects that implement a common `TaxRate` interface:
+``` php
+interface TaxRate
+{
+    /**
+     * Return the Tax Rate as a float
+     *
+     * @return float
+     */
+    public function float();
+
+    /**
+     * Return the Tax Rate as a percentage
+     *
+     * @return int
+     */
+    public function percentage();
+}
+```
+An example `UnitedKingdomValueAddedTax` implementation can be found in this package. If you would like to add a tax rate implementation for your country, state or region, please feel free to open a pull request.
