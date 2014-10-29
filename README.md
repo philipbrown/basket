@@ -44,3 +44,29 @@ interface TaxRate
 }
 ```
 An example `UnitedKingdomValueAddedTax` implementation can be found in this package. If you would like to add a tax rate implementation for your country, state or region, please feel free to open a pull request.
+
+## Jurisdictions
+Almost every country in the world has a different combination of currency and tax rates. Countries like the USA also have different tax rates within each state.
+
+In order to make it easier to work with currency and tax rate combinations you can think of the combination as an encapsulated "jurisdication". This means you can easily specify the currency and tax rate to be used depending on the location of the current customer.
+
+Jurisdictions should implement the `Jurisdiction` interface:
+``` php
+interface Jurisdiction
+{
+    /**
+     * Return the Tax Rate
+     *
+     * @return TaxRate
+     */
+    public function rate();
+
+    /**
+     * Return the currency
+     *
+     * @return Money\Currency
+     */
+    public function currency();
+}
+```
+Again, if you would like to add an implementation for your country, state or region, please feel free to open a pull request.
