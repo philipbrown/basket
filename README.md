@@ -243,3 +243,69 @@ $product->action(function ($product) {
     $product->taxable(false);
 });
 ```
+
+## Basket
+The main interface of interaction inside your application will be through the `Basket` object. The Basket object manages the adding and removing of products from the product list.
+
+To create a new `Basket` instance, pass the current `Jurisdiction`:
+``` php
+use PhilipBrown\Basket\Basket;
+use PhilipBrown\Basket\Jurisdictions\UnitedKingdom;
+
+$basket = new Basket(new UnitedKingdom);
+```
+
+The `Basket` accepts the `Jurisdiction` instance but manages the tax rate and the currency as two seperate properties. Those two objects are available through the following two methods:
+``` php
+$basket->rate();     // PhilipBrown\Basket\TaxRate
+$basket->currency(); // Money\Currency
+```
+
+The `Basket` will automatically create a new `Collection` instance to internally manage the Product instances of the current order.
+
+You can interact with the product list using the following methods:
+``` php
+// Get the count of the products
+$basket->count();
+
+// Pick a product from the basket via it's SKU
+$product = $basket->pick('abc123');
+
+// Iterate over the Collection of products
+$basket->products()->filter(function ($product) {
+    // Do something
+});
+```
+
+To add a product to the basket, pass the SKU, name and price to the add() method:
+``` php
+$sku   = 'abc123';
+$name  = 'The Lion King';
+$price = new Money(1000, new Currency('GBP'));
+
+$basket->add($sku, $name, $price);
+```
+
+You can also optionally pass a fourth parameter of a `Closure` to run actions on the new product:
+``` php
+$sku   = 'abc123';
+$name  = 'The Lion King';
+$price = new Money(1000, new Currency('GBP'));
+
+$basket->add($sku, $name, $price, function ($product) {
+    $product->quantity(3);
+    $product->discount(new PercentageDiscount(20));
+});
+```
+
+To update a product, pass the SKU and a `Closure` of actions to the `update()` method:
+``` php
+$basket->update('abc123', function ($product) {
+    $product->increment();
+});
+```
+
+To remove a product, pass the SKU to the `remove()` method:
+``` php
+$basket->remove('abc123');
+```
