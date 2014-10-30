@@ -13,9 +13,9 @@ class OrderTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function should_have_gettable_totals_and_products_arrays()
+    public function should_have_gettable_meta_and_products_arrays()
     {
-        $this->assertTrue(is_array($this->order->totals()));
+        $this->assertTrue(is_array($this->order->meta()));
         $this->assertTrue(is_array($this->order->products()));
     }
 

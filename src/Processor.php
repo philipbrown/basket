@@ -33,27 +33,27 @@ class Processor
      */
     public function process(Basket $basket)
     {
-        $totals   = $this->totals($basket);
+        $meta     = $this->meta($basket);
         $products = $this->products($basket);
 
-        return new Order($totals, $products);
+        return new Order($meta, $products);
     }
 
     /**
-     * Process the Calculators
+     * Process the Meta Data
      *
      * @param Basket $basket
      * @return array
      */
-    public function totals(Basket $basket)
+    public function meta(Basket $basket)
     {
-        $totals = [];
+        $meta = [];
 
         foreach ($this->metadata as $item) {
-            $totals[$item->name()] = $item->generate($basket);
+            $meta[$item->name()] = $item->generate($basket);
         }
 
-        return $totals;
+        return $meta;
     }
 
     /**
@@ -68,18 +68,24 @@ class Processor
 
         foreach ($basket->products() as $product) {
             $products[] = [
-                'sku'      => $product->sku,
-                'name'     => $product->name,
-                'price'    => $product->price,
-                'rate'     => $product->rate,
-                'quantity' => $product->quantity,
-                'freebie'  => $product->freebie,
-                'taxable'  => $product->taxable,
-                'delivery' => $product->delivery,
-                'coupons'  => $product->coupons,
-                'tags'     => $product->tags,
-                'discount' => $product->discount,
-                'category' => $product->category
+                'sku'            => $product->sku,
+                'name'           => $product->name,
+                'price'          => $product->price,
+                'rate'           => $product->rate,
+                'quantity'       => $product->quantity,
+                'freebie'        => $product->freebie,
+                'taxable'        => $product->taxable,
+                'delivery'       => $product->delivery,
+                'coupons'        => $product->coupons,
+                'tags'           => $product->tags,
+                'discount'       => $product->discount,
+                'category'       => $product->category,
+                'total_value'    => $this->reconciler->value($product),
+                'total_discount' => $this->reconciler->discount($product),
+                'total_delivery' => $this->reconciler->delivery($product),
+                'total_tax'      => $this->reconciler->tax($product),
+                'subtotal'       => $this->reconciler->subtotal($product),
+                'total'          => $this->reconciler->total($product)
             ];
         }
 

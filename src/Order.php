@@ -5,7 +5,7 @@ class Order
     /**
      * @var array
      */
-    private $totals;
+    private $meta;
 
     /**
      * @var array
@@ -15,24 +15,24 @@ class Order
     /**
      * Create a new Order
      *
-     * @param array $totals
+     * @param array $meta
      * @param array $products
      * @return void
      */
-    public function __construct(array $totals, array $products)
+    public function __construct(array $meta, array $products)
     {
-        $this->totals   = $totals;
+        $this->meta   = $meta;
         $this->products = $products;
     }
 
     /**
-     * Return the totals
+     * Return the meta
      *
      * @return array
      */
-    public function totals()
+    public function meta()
     {
-        return $this->totals;
+        return $this->meta;
     }
 
     /**
@@ -52,6 +52,6 @@ class Order
      */
     public function toArray()
     {
-        return array_merge($this->totals, ['products' => $this->products]);
+        return array_merge($this->meta, ['products' => $this->products]);
     }
 }
