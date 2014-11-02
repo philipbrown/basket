@@ -3,6 +3,7 @@
 use PhilipBrown\Basket\Formatters\MoneyFormatter;
 use PhilipBrown\Basket\Formatters\PercentFormatter;
 use PhilipBrown\Basket\Formatters\TaxRateFormatter;
+use PhilipBrown\Basket\Formatters\CategoryFormatter;
 use PhilipBrown\Basket\Formatters\CollectionFormatter;
 
 class Converter
@@ -26,7 +27,8 @@ class Converter
             'TaxRate'            => new TaxRateFormatter,
             'Money'              => new MoneyFormatter,
             'ValueDiscount'      => new MoneyFormatter,
-            'PercentageDiscount' => new PercentFormatter
+            'Category'           => new CategoryFormatter,
+            'PercentageDiscount' => new PercentFormatter,
         ];
 
         $this->formatters = array_merge($bootstrap, $formatters);
@@ -53,12 +55,29 @@ class Converter
      */
     public function formatter($object)
     {
-        if ($object instanceOf TaxRate) {
-            return $this->formatters['TaxRate'];
+        $interfaces = class_implements($object);
+
+        foreach ($interfaces as $interface) {
+            $class = $this->getClassName($interface);
+
+            if (isset($this->formatters[$class])) {
+                return $this->formatters[$class];
+            }
         }
 
-        $class = array_pop(explode('\\', get_class($object)));
+        $class = $this->getClassName(get_class($object));
 
         return $this->formatters[$class];
+    }
+
+    /**
+     * Get the class name from the full namespace
+     *
+     * @param string $namespace
+     * @return string
+     */
+    private function getClassName($namespace)
+    {
+        return array_pop(explode('\\', $namespace));
     }
 }

@@ -4,6 +4,7 @@ use Locale;
 use Money\Money;
 use NumberFormatter;
 use PhilipBrown\Basket\Formatter;
+use PhilipBrown\Basket\Money as MoneyInterface;
 
 class MoneyFormatter implements Formatter
 {
@@ -41,6 +42,10 @@ class MoneyFormatter implements Formatter
     public function format($value)
     {
         $formatter = new NumberFormatter($this->locale(),  NumberFormatter::CURRENCY);
+
+        if ($value instanceOf MoneyInterface) {
+            $value = $value->toMoney();
+        }
 
         $code     = $this->code($value);
         $divisor  = $this->divisor($code);

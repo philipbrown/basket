@@ -1,6 +1,7 @@
 <?php namespace PhilipBrown\Basket\Formatters;
 
 use PhilipBrown\Basket\Formatter;
+use PhilipBrown\Basket\Percentage;
 
 class PercentFormatter implements Formatter
 {
@@ -12,6 +13,10 @@ class PercentFormatter implements Formatter
      */
     public function format($value)
     {
+        if ($value instanceOf Percentage) {
+            $value = $value->toPercent();
+        }
+
         return $value->int().'%';
     }
 }

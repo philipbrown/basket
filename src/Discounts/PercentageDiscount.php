@@ -3,8 +3,9 @@
 use PhilipBrown\Basket\Product;
 use PhilipBrown\Basket\Percent;
 use PhilipBrown\Basket\Discount;
+use PhilipBrown\Basket\Percentage;
 
-class PercentageDiscount implements Discount
+class PercentageDiscount implements Discount, Percentage
 {
     /**
      * @var int
@@ -39,6 +40,16 @@ class PercentageDiscount implements Discount
      * @return mixed
      */
     public function rate()
+    {
+        return new Percent($this->rate);
+    }
+
+    /**
+     * Return the object as a Percent
+     *
+     * @return Percent
+     */
+    public function toPercent()
     {
         return new Percent($this->rate);
     }
