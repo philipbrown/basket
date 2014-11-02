@@ -2,6 +2,94 @@
 
 **The missing link between your product pages and your payment gateway**
 
+## tl;dr
+``` php
+/*
+    1. Create a new Basket for the correct Jurisdiction
+*/
+use PhilipBrown\Basket\Basket;
+use PhilipBrown\Basket\Jurisdictions\UnitedKingdom;
+
+$basket = new Basket(new UnitedKingdom);
+
+/*
+    2. Add a Product to the Basket
+*/
+use Money\Money;
+use Money\Currency;
+
+$basket->add('0', 'Back to the Future Blu-ray', new Money(1000, new Currency));
+
+/*
+    3. Process the Basket to create an Order
+*/
+use PhilipBrown\Basket\Processor;
+use PhilipBrown\Basket\Converter;
+use PhilipBrown\Basket\MetaData\TaxMetaData;
+use PhilipBrown\Basket\Fixtures\BasketFixture;
+use PhilipBrown\Basket\MetaData\ValueMetaData;
+use PhilipBrown\Basket\MetaData\TotalMetaData;
+use PhilipBrown\Basket\MetaData\TaxableMetaData;
+use PhilipBrown\Basket\MetaData\DeliveryMetaData;
+use PhilipBrown\Basket\MetaData\DiscountMetaData;
+use PhilipBrown\Basket\MetaData\SubtotalMetaData;
+use PhilipBrown\Basket\MetaData\ProductsMetaData;
+use PhilipBrown\Basket\Transformers\JSONTransformer;
+use PhilipBrown\Basket\Reconcilers\DefaultReconciler;
+
+$reconciler  = new DefaultReconciler;
+
+$calculators = [
+    new DeliveryMetaData($reconciler),
+    new DiscountMetaData($reconciler),
+    new ProductsMetaData,
+    new SubtotalMetaData($reconciler),
+    new TaxableMetaData,
+    new TaxMetaData($reconciler),
+    new TotalMetaData($reconciler),
+    new ValueMetaData($reconciler)
+];
+
+$fixtures    = new BasketFixture;
+$processor   = new Processor($reconciler, $calculators);
+$transformer = new JSONTransformer(new Converter);
+
+$order = $processor->process($basket);
+$transformer->transform($order);
+
+{
+    "delivery":"£0.00",
+    "discount":"£0.00",
+    "products_count":1,
+    "subtotal":"£10.00",
+    "taxable":1,
+    "tax":"£2.00",
+    "total":"£12.00",
+    "value":"£10.00",
+    "products":[{
+        "sku":"0",
+        "name":"Back to the Future Blu-ray",
+        "price":"£10.00",
+        "rate":"20%",
+        "quantity":1,
+        "freebie":false,
+        "taxable":true,
+        "delivery":"£0.00",
+        "coupons":[],
+        "tags":[],
+        "discount":null,
+        "category":null,
+        "total_value":
+        "£10.00",
+        "total_discount":"£0.00",
+        "total_delivery":"£0.00",
+        "total_tax":"£2.00",
+        "subtotal":"£10.00",
+        "total":"£12.00"
+    }]
+}
+```
+
 ## Money and Currency
 Dealing with Money and Currency in an ecommerce application can be fraught with difficulties. Instead of passing around dumb values, we can use Value Objects that are immutable and protect the invariants of the items we hope to represent:
 ``` php
