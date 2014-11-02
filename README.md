@@ -24,7 +24,7 @@ $basket = new Basket(new UnitedKingdom);
 use Money\Money;
 use Money\Currency;
 
-$basket->add('0', 'Back to the Future Blu-ray', new Money(1000, new Currency));
+$basket->add('0', 'Back to the Future Blu-ray', new Money(1000, new Currency('GBP')));
 
 /*
     3. Process the Basket to create an Order
@@ -45,7 +45,7 @@ use PhilipBrown\Basket\Reconcilers\DefaultReconciler;
 
 $reconciler  = new DefaultReconciler;
 
-$calculators = [
+$meta = [
     new DeliveryMetaData($reconciler),
     new DiscountMetaData($reconciler),
     new ProductsMetaData,
@@ -57,7 +57,7 @@ $calculators = [
 ];
 
 $fixtures    = new BasketFixture;
-$processor   = new Processor($reconciler, $calculators);
+$processor   = new Processor($reconciler, $meta);
 $transformer = new JSONTransformer(new Converter);
 
 $order = $processor->process($basket);
@@ -647,7 +647,7 @@ use PhilipBrown\Basket\Reconcilers\DefaultReconciler;
 
 $reconciler  = new DefaultReconciler;
 
-$calculators = [
+$meta = [
     new DeliveryMetaData($reconciler),
     new DiscountMetaData($reconciler),
     new ProductsMetaData,
@@ -658,7 +658,7 @@ $calculators = [
     new ValueMetaData($reconciler)
 ];
 
-$processor   = new Processor($reconciler, $calculators);
+$processor   = new Processor($reconciler, $meta);
 $transformer = new ArrayTransformer(new Converter);
 
 $order   = $processor->process($basket);
