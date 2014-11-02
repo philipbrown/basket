@@ -62,7 +62,6 @@ $order     = $processor->process($basket);
     4. Transform the Order into an appropriate response
 */
 $transformer = new JSONTransformer(new Converter);
-
 $transformer->transform($order);
 
 {
