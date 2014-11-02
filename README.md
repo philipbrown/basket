@@ -32,7 +32,6 @@ $basket->add('0', 'Back to the Future Blu-ray', new Money(1000, new Currency('GB
 use PhilipBrown\Basket\Processor;
 use PhilipBrown\Basket\Converter;
 use PhilipBrown\Basket\MetaData\TaxMetaData;
-use PhilipBrown\Basket\Fixtures\BasketFixture;
 use PhilipBrown\Basket\MetaData\ValueMetaData;
 use PhilipBrown\Basket\MetaData\TotalMetaData;
 use PhilipBrown\Basket\MetaData\TaxableMetaData;
@@ -56,11 +55,14 @@ $meta = [
     new ValueMetaData($reconciler)
 ];
 
-$fixtures    = new BasketFixture;
-$processor   = new Processor($reconciler, $meta);
+$processor = new Processor($reconciler, $meta);
+$order     = $processor->process($basket);
+
+/*
+    4. Transform the Order into an appropriate response
+*/
 $transformer = new JSONTransformer(new Converter);
 
-$order = $processor->process($basket);
 $transformer->transform($order);
 
 {
