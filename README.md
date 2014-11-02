@@ -3,7 +3,7 @@
 **The missing link between your product pages and your payment gateway**
 
 ## tl;dr
-``` php
+```php
 /*
     1. Create a new Basket for the correct Jurisdiction
 */
@@ -92,7 +92,7 @@ $transformer->transform($order);
 
 ## Money and Currency
 Dealing with Money and Currency in an ecommerce application can be fraught with difficulties. Instead of passing around dumb values, we can use Value Objects that are immutable and protect the invariants of the items we hope to represent:
-``` php
+```php
 use Money\Money;
 use Money\Currency;
 
