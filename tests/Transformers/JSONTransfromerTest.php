@@ -524,7 +524,7 @@ class JSONTransfromerTest extends \PHPUnit_Framework_TestCase
         $payload = json_decode($this->transformer->transform($order));
 
         $this->assertTrue(is_object($payload));
-        $this->assertEquals('£0.00',        $payload->delivery);
+        $this->assertEquals('£0.00',       $payload->delivery);
         $this->assertEquals('£100.00',     $payload->discount);
         $this->assertEquals(5,             $payload->products_count);
         $this->assertEquals('£1,199.96',   $payload->subtotal);

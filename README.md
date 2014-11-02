@@ -432,3 +432,114 @@ $order = $processor->process($basket);
 The `Processor` class will run each `MetaData` instance on the basket and turn each `Product` instance into an array of attributes.
 
 You can now use the `Order` object to update your database or send the order to your payment gateway of choice.
+
+## Transforming an Order
+You will inevitably want to display the details of the order in a view or return the processed order as a HTTP response.
+
+In order to seperate the display of an object from the object itself, you can use special classes that implement the `Formatter` interface:
+``` php
+interface Formatter
+{
+    /**
+     * Format an input to an output
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    public function format($value);
+}
+```
+There are 5 example formatter classes of this package:
+- `CategoryFormatter`
+- `CollectionFormatter`
+- `MoneyFormatter`
+- `PercentFormatter`
+- `TaxRateFormatter`
+
+The process of converting an object using an instance of `Formatter` is encapsulated in the `Converter` object:
+``` php
+use Money\Money;
+use Money\Currency;
+use PhilipBrown\Basket\Converter;
+
+$converter = new Converter;
+
+$converter->convert(new Money(500, new Currency('GBP')));
+// => £10.00
+```
+
+The `Converter` class is bootstrapped with default `Formatter` instances. If you would like to override any of the default formatters, simply pass an array on instantiation:
+``` php
+$converter = new Converter(['Money' => new CustomerMoneyFormatter]);
+```
+
+Finally to transform the `Order` into an appropriate output you can use either the `ArrayTransformer` or `JSONTransformer` class:
+``` php
+use PhilipBrown\Basket\Processor;
+use PhilipBrown\Basket\Converter;
+use PhilipBrown\Basket\MetaData\TaxMetaData;
+use PhilipBrown\Basket\Fixtures\BasketFixture;
+use PhilipBrown\Basket\MetaData\ValueMetaData;
+use PhilipBrown\Basket\MetaData\TotalMetaData;
+use PhilipBrown\Basket\MetaData\TaxableMetaData;
+use PhilipBrown\Basket\MetaData\DeliveryMetaData;
+use PhilipBrown\Basket\MetaData\DiscountMetaData;
+use PhilipBrown\Basket\MetaData\SubtotalMetaData;
+use PhilipBrown\Basket\MetaData\ProductsMetaData;
+use PhilipBrown\Basket\Transformers\ArrayTransformer;
+use PhilipBrown\Basket\Reconcilers\DefaultReconciler;
+
+$reconciler  = new DefaultReconciler;
+
+$calculators = [
+    new DeliveryMetaData($reconciler),
+    new DiscountMetaData($reconciler),
+    new ProductsMetaData,
+    new SubtotalMetaData($reconciler),
+    new TaxableMetaData,
+    new TaxMetaData($reconciler),
+    new TotalMetaData($reconciler),
+    new ValueMetaData($reconciler)
+];
+
+$processor   = new Processor($reconciler, $calculators);
+$transformer = new ArrayTransformer(new Converter);
+
+$order   = $processor->process($basket);
+$payload = $transformer->transform($order);
+
+/*
+[
+    'delivery'       => "£0.00",
+    'discount'       => "£0.00",
+    'products_count' => 1,
+    'subtotal'       => "£10.00",
+    'taxable'        => 1,
+    'tax'            => "£2.00",
+    'total'          => "£12.00",
+    'value'          => "£10.00",
+    'products' => [
+        [
+            'sku'            => "0",
+            'name'           => "Back to the Future Blu-ray",
+            'price'          => "£10.00",
+            'rate'           => "20%",
+            'quantity'       => 1,
+            'freebie'        => false,
+            'taxable'        => true,
+            'delivery'       => "£0.00"
+            'coupons'        => [],
+            'tags'           => [],
+            'discount'       => null,
+            'category'       => null,
+            'total_value'    => "£10.00",
+            'total_discount' => "£0.00",
+            'total_delivery' => "£0.00",
+            'total_tax'      => "£2.00",
+            'subtotal'       => "£10.00",
+            'total'          => "£12.00"
+        ]
+    ]
+]
+*/
+```
