@@ -1,4 +1,4 @@
-<?php namespace PhilipBrown\Basket;
+<?php namespace PhilipBrown\Basket\Tests;
 
 use Money\Money;
 use Money\Currency;
