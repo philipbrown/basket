@@ -11,13 +11,13 @@
     }],
     "autoload": {
         "psr-4": {
-            "PhilipBrown\\Basket\\": "src/"
+            "PhilipBrown\\Basket\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PhilipBrown\\Basket\\Tests\\": "tests/",
-            "PhilipBrown\\Basket\\Fixtures\\": "fixtures/"
+            "PhilipBrown\\Basket\\Tests\\": "tests",
+            "PhilipBrown\\Basket\\Fixtures\\": "fixtures"
         }
     },
     "require": {
