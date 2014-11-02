@@ -2,6 +2,10 @@
 
 **The missing link between your product pages and your payment gateway**
 
+[![Build Status](https://travis-ci.org/philipbrown/basket.png?branch=master)](https://travis-ci.org/philipbrown/basket)
+[![Code Coverage](https://scrutinizer-ci.com/g/philipbrown/basket/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/philipbrown/basket/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/philipbrown/basket/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/philipbrown/basket/?branch=master)
+
 ## tl;dr
 ```php
 <?php
