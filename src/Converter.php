@@ -78,6 +78,8 @@ class Converter
      */
     private function getClassName($namespace)
     {
-        return array_pop(explode('\\', $namespace));
+        $namespace = explode('\\', $namespace)
+
+        return array_pop($namespace);
     }
 }
