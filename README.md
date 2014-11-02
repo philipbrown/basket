@@ -4,6 +4,8 @@
 
 ## tl;dr
 ```php
+<?php
+
 /*
     1. Create a new Basket for the correct Jurisdiction
 */
@@ -93,6 +95,8 @@ $transformer->transform($order);
 ## Money and Currency
 Dealing with Money and Currency in an ecommerce application can be fraught with difficulties. Instead of passing around dumb values, we can use Value Objects that are immutable and protect the invariants of the items we hope to represent:
 ```php
+<?php
+
 use Money\Money;
 use Money\Currency;
 
@@ -100,7 +104,9 @@ $price = new Money(500, new Currency('GBP'));
 ```
 
 Equality is important when working with many different types of currency. You shouldn't be able to blindly add two different currencies without some kind of exchange process:
-``` php
+```php
+<?php
+
 $money1 = new Money(500, new Currency('GBP'));
 $money2 = new Money(500, new Currency('USD'));
 
@@ -114,7 +120,9 @@ This package uses [mathiasverraes/money](https://github.com/mathiasverraes/money
 One of the big problems with dealing with international commerce is the fact that almost everyone has their own rules around tax.
 
 To make tax rates interchangeable we can encapsulate them as objects that implement a common `TaxRate` interface:
-``` php
+```php
+<?php
+
 interface TaxRate
 {
     /**
@@ -141,7 +149,9 @@ Almost every country in the world has a different combination of currency and ta
 In order to make it easier to work with currency and tax rate combinations you can think of the combination as an encapsulated "jurisdication". This means you can easily specify the currency and tax rate to be used depending on the location of the current customer.
 
 Jurisdictions should implement the `Jurisdiction` interface:
-``` php
+```php
+<?php
+
 interface Jurisdiction
 {
     /**
@@ -168,7 +178,9 @@ Each item of the basket is encapsulated as an instance of `Product`. The majorit
 The `Product` class captures the current state of the each item in the basket. This includes the price, quantity and any discounts that should be applied.
 
 To create a new `Product`, pass the product's [SKU](http://en.wikipedia.org/wiki/Stock_keeping_unit), name, price and tax rate:
-``` php
+```php
+<?php
+
 use Money\Money;
 use Money\Currency;
 use PhilipBrown\Basket\TaxRates\UnitedKingdomValueAddedTax;
@@ -183,7 +195,9 @@ $product = new Product($sku, $name, $price, $rate);
 The SKU, name, price and tax rate should not be altered once the `Product` is created and so there are no setter methods for these properties on the object.
 
 Each of the `Product` object's `private` properties are available as pseudo `public` properties via the `__get()` magic method:
-``` php
+```php
+<?php
+
 $product->sku;    // '1'
 $product->name;   // 'Four Steps to the Epiphany'
 $product->rate;   // UnitedKingdomValueAddedTax
@@ -192,7 +206,9 @@ $product->price;  // Money\Money
 
 ### Quantity
 By default, each `Product` instance will automatically be set with a quantity of 1. You can set the quantity of the product in one of three ways:
-``` php
+```php
+<?php
+
 $product->quantity(2);
 
 $product->increment();
@@ -205,7 +221,9 @@ $product->quantity;
 
 ### Freebie
 A product can be optionally set as a freebie. This means that the value of the product will not be included during the reconciliation process:
-``` php
+```php
+<?php
+
 $product->freebie(true);
 
 // Return the `freebie` status
@@ -216,7 +234,9 @@ By default the `freebie` status of each `Product` is set to `false`.
 
 ### Taxable
 You can also mark a product as not taxable. By default all products are set to incur tax. By setting the `taxable` status to `false` the taxable value of the product won't be calculated during reconciliation:
-``` php
+```php
+<?php
+
 $product->taxable(false);
 
 // Return the `taxable` status
@@ -225,7 +245,9 @@ $product->taxable;
 
 ### Delivery
 If you would like to add an additional charge for delivery for the product you can do so by passing an instance of `Money\Money` to the `delivery()` method:
-``` php
+```php
+<?php
+
 use Money\Money;
 use Money\Currency;
 
@@ -239,7 +261,9 @@ The `Currency` of the delivery charge must be the same as the `price` that was s
 
 ### Coupons
 If you would like to record a coupon on the product, you can do so by passing a value to the `coupon()` method:
-``` php
+```php
+<?php
+
 $product->coupons('FREE99');
 
 // Return the `coupons` Collection
@@ -252,7 +276,9 @@ The coupon itself does not cause the product to set a discount, it is simply a w
 
 ### Tags
 Similar to coupons, tags allow you to tag a product so you can record experiments or A/B testing:
-``` php
+```php
+<?php
+
 $product->tags('campaign_123456');
 
 // Return the `tags` Collection
@@ -263,7 +289,9 @@ The `tags` class property is also an instance of `Collection`.
 
 ### Discounts
 Discounts are objects that can be applied during the reconciliation process to reduce the price of a product. Each discount object should implement the `Discount` interface:
-``` php
+```php
+<?php
+
 interface Discount
 {
     /**
@@ -284,7 +312,9 @@ interface Discount
 ```
 
 There are two discount objects supplied with this package that allow you to set a value discount or a percentage discount:
-``` php
+```php
+<?php
+
 PhilipBrown\Basket\Discounts\ValueDiscount;
 PhilipBrown\Basket\Discounts\PercentageDiscount;
 
@@ -299,7 +329,9 @@ $product->discount;
 If you want to apply a set of rules to all products of a certain type, you can define a category object that can be applied to a `Product` instance.
 
 Each category object should implement the `Category` interface:
-``` php
+```php
+<?php
+
 interface Category
 {
     /**
@@ -313,7 +345,9 @@ interface Category
 ```
 
 `PhysicalBook` is an example of a `Category` object that is supplied with this package. When applied to a product, the `PhyisicalBook` will automatically set the `taxable` status to `false`:
-``` php
+```php
+<?php
+
 use PhilipBrown\Basket\Categories\PhysicalBook;
 
 $product->category(new PhysicalBook);
@@ -324,7 +358,9 @@ $product->category;
 
 ### Actions
 Finally if you want to run a series of actions on a product, you can pass a `Closure` to the `action()` method:
-``` php
+```php
+<?php
+
 $product->action(function ($product) {
     $product->quantity(3);
     $product->freebie(true);
@@ -336,7 +372,9 @@ $product->action(function ($product) {
 The main interface of interaction inside your application will be through the `Basket` object. The Basket object manages the adding and removing of products from the product list.
 
 To create a new `Basket` instance, pass the current `Jurisdiction`:
-``` php
+```php
+<?php
+
 use PhilipBrown\Basket\Basket;
 use PhilipBrown\Basket\Jurisdictions\UnitedKingdom;
 
@@ -344,7 +382,9 @@ $basket = new Basket(new UnitedKingdom);
 ```
 
 The `Basket` accepts the `Jurisdiction` instance but manages the tax rate and the currency as two seperate properties. Those two objects are available through the following two methods:
-``` php
+```php
+<?php
+
 $basket->rate();     // PhilipBrown\Basket\TaxRate
 $basket->currency(); // Money\Currency
 ```
@@ -352,7 +392,9 @@ $basket->currency(); // Money\Currency
 The `Basket` will automatically create a new `Collection` instance to internally manage the Product instances of the current order.
 
 You can interact with the product list using the following methods:
-``` php
+```php
+<?php
+
 // Get the count of the products
 $basket->count();
 
@@ -366,7 +408,9 @@ $basket->products()->filter(function ($product) {
 ```
 
 To add a product to the basket, pass the SKU, name and price to the add() method:
-``` php
+```php
+<?php
+
 $sku   = 'abc123';
 $name  = 'The Lion King';
 $price = new Money(1000, new Currency('GBP'));
@@ -375,7 +419,9 @@ $basket->add($sku, $name, $price);
 ```
 
 You can also optionally pass a fourth parameter of a `Closure` to run actions on the new product:
-``` php
+```php
+<?php
+
 $sku   = 'abc123';
 $name  = 'The Lion King';
 $price = new Money(1000, new Currency('GBP'));
@@ -387,14 +433,18 @@ $basket->add($sku, $name, $price, function ($product) {
 ```
 
 To update a product, pass the SKU and a `Closure` of actions to the `update()` method:
-``` php
+```php
+<?php
+
 $basket->update('abc123', function ($product) {
     $product->increment();
 });
 ```
 
 To remove a product, pass the SKU to the `remove()` method:
-``` php
+```php
+<?php
+
 $basket->remove('abc123');
 ```
 
@@ -404,7 +454,9 @@ Each `Product` object is the product in it's current state. In order to calculat
 One of the problems I encounted when researching this package is that people seem to have different opinions of how the reconciliation process should work.
 
 To solve this problem, I've defined a `Reconciler` interface so you an implement your own reconciliation process:
-``` php
+```php
+<?php
+
 interface Reconciler
 {
     /**
@@ -467,7 +519,9 @@ Whilst certain types of ecommerce applications will require very little in the w
 In order to not force simple applications to run deep analysis on every order, and also give large applications the freedom to implement their own meta data calculations, each meta data item is optional and it's very easy to define your own.
 
 Each meta data item should be encapsulated as a class and should implement the `MetaData` interface:
-``` php
+```php
+<?php
+
 interface MetaData
 {
     /**
@@ -503,7 +557,9 @@ This package includes the following meta data items by default:
 
 ## Processing an Order
 Once you are ready to process the items in the `Basket` and turn it into an immutable `Order`, you can use the `Processor` class:
-``` php
+```php
+<?php
+
 use PhilipBrown\Basket\MetaData\TotalMetaData;
 use PhilipBrown\Basket\MetaData\ProductsMetaData;
 use PhilipBrown\Basket\Reconcilers\DefaultReconciler;
@@ -525,7 +581,9 @@ You can now use the `Order` object to update your database or send the order to 
 You will inevitably want to display the details of the order in a view or return the processed order as a HTTP response.
 
 In order to seperate the display of an object from the object itself, you can use special classes that implement the `Formatter` interface:
-``` php
+```php
+<?php
+
 interface Formatter
 {
     /**
@@ -545,7 +603,9 @@ There are 5 example formatter classes of this package:
 - `TaxRateFormatter`
 
 The process of converting an object using an instance of `Formatter` is encapsulated in the `Converter` object:
-``` php
+```php
+<?php
+
 use Money\Money;
 use Money\Currency;
 use PhilipBrown\Basket\Converter;
@@ -557,12 +617,16 @@ $converter->convert(new Money(500, new Currency('GBP')));
 ```
 
 The `Converter` class is bootstrapped with default `Formatter` instances. If you would like to override any of the default formatters, simply pass an array on instantiation:
-``` php
+```php
+<?php
+
 $converter = new Converter(['Money' => new CustomerMoneyFormatter]);
 ```
 
 Finally to transform the `Order` into an appropriate output you can use either the `ArrayTransformer` or `JSONTransformer` class:
-``` php
+```php
+<?php
+
 use PhilipBrown\Basket\Processor;
 use PhilipBrown\Basket\Converter;
 use PhilipBrown\Basket\MetaData\TaxMetaData;
