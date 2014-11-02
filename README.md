@@ -85,8 +85,7 @@ $transformer->transform($order);
         "tags":[],
         "discount":null,
         "category":null,
-        "total_value":
-        "£10.00",
+        "total_value":"£10.00",
         "total_discount":"£0.00",
         "total_delivery":"£0.00",
         "total_tax":"£2.00",
