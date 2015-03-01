@@ -6,6 +6,15 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/philipbrown/basket/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/philipbrown/basket/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/philipbrown/basket/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/philipbrown/basket/?branch=master)
 
+## Installation
+
+Using [composer](https://packagist.org/packages/philipbrown/basket):
+
+```bash
+$ composer require philipbrown/basket
+```
+**WARNING!** This package is still pre `1.0` and so there will be breaking changes. Use at your own risk!
+
 ## Money and Currency
 Dealing with Money and Currency in an ecommerce application can be fraught with difficulties. Instead of passing around dumb values, we can use Value Objects that are immutable and protect the invariants of the items we hope to represent:
 ```php
