@@ -4,14 +4,14 @@ use PhilipBrown\Basket\TaxRate;
 
 class TaxRateTest extends \PHPUnit_Framework_TestCase
 {
-	/** @var TaxRate */
-	private $tax;
+    /** @var TaxRate */
+    private $tax;
 
-	/** @return void */
-	public function setUp()
-	{
-		$this->tax = new TaxRate(0.20);
-	}
+    /** @return void */
+    public function setUp()
+    {
+        $this->tax = new TaxRate(0.20);
+    }
 
     /** @test */
     public function should_return_rate_as_float()

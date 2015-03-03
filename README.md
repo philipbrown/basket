@@ -41,6 +41,10 @@ $rate = new TaxRate(0.20);
 ```
 The `TaxRate` object should be instantiated with your desired tax rate as a `float`. The `TaxRate` object has two public methods for returning the value as a `float` or a `percentage`:
 ```php
+use PhilipBrown\Basket\TaxRate;
+
+$rate = new TaxRate(0.20);
+
 $rate->float();      // 0.20
 
 $rate->percentage(); // 20
