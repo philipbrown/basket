@@ -1,8 +1,8 @@
 <?php namespace PhilipBrown\Basket\Jurisdictions;
 
 use Money\Currency;
+use PhilipBrown\Basket\TaxRate;
 use PhilipBrown\Basket\Jurisdiction;
-use PhilipBrown\Basket\TaxRates\UnitedKingdomValueAddedTax;
 
 class UnitedKingdom implements Jurisdiction
 {
@@ -17,13 +17,11 @@ class UnitedKingdom implements Jurisdiction
     private $tax;
 
     /**
-     * Create a new Jurisdiction
-     *
      * @return void
      */
     public function __construct()
     {
-        $this->tax      = new UnitedKingdomValueAddedTax;
+        $this->tax      = new TaxRate(0.20);
         $this->currency = new Currency('GBP');
     }
 

@@ -1,9 +1,8 @@
 <?php namespace PhilipBrown\Basket\Jurisdictions;
 
 use Money\Currency;
-use PhilipBrown\Basket\Jurisdiction;
 use PhilipBrown\Basket\TaxRate;
-use PhilipBrown\Basket\TaxRates\BelgiumValueAddedTax;
+use PhilipBrown\Basket\Jurisdiction;
 
 class Belgium implements Jurisdiction
 {
@@ -18,16 +17,17 @@ class Belgium implements Jurisdiction
     private $tax;
 
     /**
-     * Create a new Jurisdiction
+     * @return void
      */
     public function __construct()
     {
-        $this->tax      = new BelgiumValueAddedTax;
+        $this->tax      = new TaxRate(0.21);
         $this->currency = new Currency('EUR');
     }
 
     /**
      * Return the Tax Rate
+     *
      * @return TaxRate
      */
     public function rate()
@@ -37,7 +37,8 @@ class Belgium implements Jurisdiction
 
     /**
      * Return the currency
-     * @return \Money\Currency
+     *
+     * @return Currency
      */
     public function currency()
     {

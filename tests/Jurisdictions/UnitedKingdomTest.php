@@ -8,6 +8,7 @@ class UnitedKingdomTest extends \PHPUnit_Framework_TestCase
     /** @var Jurisdiction */
     private $jurisdiction;
 
+    /** @return void */
     public function setUp()
     {
         $this->jurisdiction = new UnitedKingdom;
@@ -17,12 +18,12 @@ class UnitedKingdomTest extends \PHPUnit_Framework_TestCase
     public function should_return_the_tax_rate()
     {
         $this->assertInstanceOf(
-            'PhilipBrown\Basket\TaxRates\UnitedKingdomValueAddedTax', $this->jurisdiction->rate());
+            'PhilipBrown\Basket\TaxRate', $this->jurisdiction->rate());
     }
 
     /** @test */
     public function should_return_the_currency()
     {
-         $this->assertEquals(new Currency('GBP'), $this->jurisdiction->currency());
+        $this->assertEquals(new Currency('GBP'), $this->jurisdiction->currency());
     }
 }
