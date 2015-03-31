@@ -1,7 +1,6 @@
 <?php namespace PhilipBrown\Basket;
 
 use Closure;
-use Money\Money;
 
 class Basket
 {
@@ -87,21 +86,12 @@ class Basket
     /**
      * Add a product to the basket
      *
-     * @param string $sku
-     * @param string $name
-     * @param Money $price
-     * @param Closure $action
+     * @param Product $product
      * @return void
      */
-    public function add($sku, $name, Money $price, Closure $action = null)
+    public function add(Product $product)
     {
-        $product = new Product($sku, $name, $price, $this->rate);
-
-        if ($action) {
-          $product->action($action);
-        }
-
-        $this->products->add($sku, $product);
+        $this->products->add($product->sku, $product);
     }
 
     /**
