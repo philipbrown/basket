@@ -4,6 +4,7 @@ use Money\Money;
 use Money\Currency;
 use PhilipBrown\Basket\Basket;
 use PhilipBrown\Basket\Jurisdictions\UnitedKingdom;
+use PhilipBrown\Basket\Product;
 
 class BasketTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,10 +13,13 @@ class BasketTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $this->basket = new Basket(new UnitedKingdom);
+
         $sku  = '1';
         $name = 'The Lion King';
-        $this->basket = new Basket(new UnitedKingdom);
-        $this->basket->add($sku, $name, new Money(1000, new Currency('GBP')));
+        $product = new Product($sku, $name, new Money(1000, new Currency('GBP')), $this->basket->rate());
+
+        $this->basket->add($product);
     }
 
     /** @test */
@@ -52,7 +56,9 @@ class BasketTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function should_add_a_product()
     {
-        $this->basket->add('2', 'Die Hard', new Money(1000, new Currency('GBP')));
+        $product = new Product('2', 'Die Hard', new Money(1000, new Currency('GBP')), $this->basket->rate());
+
+        $this->basket->add($product);
 
         $this->assertEquals(2, $this->basket->count());
     }
