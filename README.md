@@ -290,25 +290,11 @@ $basket->products()->filter(function ($product) {
 });
 ```
 
-To add a product to the basket, pass the SKU, name and price to the add() method:
+To add a product to the basket, pass a Product object to the add() method:
 ```php
-$sku   = 'abc123';
-$name  = 'The Lion King';
-$price = new Money(1000, new Currency('GBP'));
+$product = new Product('abc123', 'The Lion King', new Money(1000, new Currency('GBP'), $basket->rate());
 
-$basket->add($sku, $name, $price);
-```
-
-You can also optionally pass a fourth parameter of a `Closure` to run actions on the new product:
-```php
-$sku   = 'abc123';
-$name  = 'The Lion King';
-$price = new Money(1000, new Currency('GBP'));
-
-$basket->add($sku, $name, $price, function ($product) {
-    $product->quantity(3);
-    $product->discount(new PercentageDiscount(20));
-});
+$basket->add($product);
 ```
 
 To update a product, pass the SKU and a `Closure` of actions to the `update()` method:
