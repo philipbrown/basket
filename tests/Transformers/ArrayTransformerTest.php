@@ -63,7 +63,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                      $payload['products'][0]['delivery']);
         $this->assertEquals([],                           $payload['products'][0]['coupons']);
         $this->assertEquals([],                           $payload['products'][0]['tags']);
-        $this->assertEquals(null,                         $payload['products'][0]['discount']);
+        $this->assertEquals([],                           $payload['products'][0]['discounts']);
         $this->assertEquals(null,                         $payload['products'][0]['category']);
         $this->assertEquals('£10.00',                     $payload['products'][0]['total_value']);
         $this->assertEquals('£0.00',                      $payload['products'][0]['total_discount']);
@@ -97,7 +97,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                $payload['products'][0]['delivery']);
         $this->assertEquals([],                     $payload['products'][0]['coupons']);
         $this->assertEquals([],                     $payload['products'][0]['tags']);
-        $this->assertEquals(null,                   $payload['products'][0]['discount']);
+        $this->assertEquals([],                     $payload['products'][0]['discounts']);
         $this->assertEquals('Physical Book',        $payload['products'][0]['category']);
         $this->assertEquals('£15.00',               $payload['products'][0]['total_value']);
         $this->assertEquals('£0.00',                $payload['products'][0]['total_discount']);
@@ -115,7 +115,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                $payload['products'][1]['delivery']);
         $this->assertEquals([],                     $payload['products'][1]['coupons']);
         $this->assertEquals([],                     $payload['products'][1]['tags']);
-        $this->assertEquals(null,                   $payload['products'][1]['discount']);
+        $this->assertEquals([],                     $payload['products'][1]['discounts']);
         $this->assertEquals(null,                   $payload['products'][1]['category']);
         $this->assertEquals('£299.97',              $payload['products'][1]['total_value']);
         $this->assertEquals('£0.00',                $payload['products'][1]['total_discount']);
@@ -149,7 +149,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',       $payload['products'][0]['delivery']);
         $this->assertEquals([],            $payload['products'][0]['coupons']);
         $this->assertEquals([],            $payload['products'][0]['tags']);
-        $this->assertEquals(null,          $payload['products'][0]['discount']);
+        $this->assertEquals([],            $payload['products'][0]['discounts']);
         $this->assertEquals(null,          $payload['products'][0]['category']);
         $this->assertEquals('£4.99',       $payload['products'][0]['total_value']);
         $this->assertEquals('£0.00',       $payload['products'][0]['total_discount']);
@@ -167,7 +167,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',       $payload['products'][1]['delivery']);
         $this->assertEquals([],            $payload['products'][1]['coupons']);
         $this->assertEquals([],            $payload['products'][1]['tags']);
-        $this->assertEquals('10%',         $payload['products'][1]['discount']);
+        $this->assertEquals('10%',         $payload['products'][1]['discounts'][0]);
         $this->assertEquals(null,          $payload['products'][1]['category']);
         $this->assertEquals('£999.99',     $payload['products'][1]['total_value']);
         $this->assertEquals('£100.00',     $payload['products'][1]['total_discount']);
@@ -201,7 +201,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',           $payload['products'][0]['delivery']);
         $this->assertEquals([],                $payload['products'][0]['coupons']);
         $this->assertEquals([],                $payload['products'][0]['tags']);
-        $this->assertEquals('10%',             $payload['products'][0]['discount']);
+        $this->assertEquals('10%',             $payload['products'][0]['discounts'][0]);
         $this->assertEquals(null,              $payload['products'][0]['category']);
         $this->assertEquals('£999.99',         $payload['products'][0]['total_value']);
         $this->assertEquals('£100.00',         $payload['products'][0]['total_discount']);
@@ -219,7 +219,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',           $payload['products'][1]['delivery']);
         $this->assertEquals([],                $payload['products'][1]['coupons']);
         $this->assertEquals([],                $payload['products'][1]['tags']);
-        $this->assertEquals('£15.00',          $payload['products'][1]['discount']);
+        $this->assertEquals('£15.00',          $payload['products'][1]['discounts'][0]);
         $this->assertEquals(null,              $payload['products'][1]['category']);
         $this->assertEquals('£49.50',          $payload['products'][1]['total_value']);
         $this->assertEquals('£15.00',          $payload['products'][1]['total_discount']);
@@ -237,7 +237,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£60.00',          $payload['products'][2]['delivery']);
         $this->assertEquals([],                $payload['products'][2]['coupons']);
         $this->assertEquals([],                $payload['products'][2]['tags']);
-        $this->assertEquals(null,              $payload['products'][2]['discount']);
+        $this->assertEquals([],                $payload['products'][2]['discounts']);
         $this->assertEquals(null,              $payload['products'][2]['category']);
         $this->assertEquals('£899.99',         $payload['products'][2]['total_value']);
         $this->assertEquals('£0.00',           $payload['products'][2]['total_discount']);
@@ -271,7 +271,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£6.99',          $payload['products'][0]['delivery']);
         $this->assertEquals([],               $payload['products'][0]['coupons']);
         $this->assertEquals([],               $payload['products'][0]['tags']);
-        $this->assertEquals('10%',            $payload['products'][0]['discount']);
+        $this->assertEquals('10%',            $payload['products'][0]['discounts'][0]);
         $this->assertEquals(null,             $payload['products'][0]['category']);
         $this->assertEquals('£131.96',        $payload['products'][0]['total_value']);
         $this->assertEquals('£13.20',         $payload['products'][0]['total_discount']);
@@ -289,7 +289,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£5.99',          $payload['products'][1]['delivery']);
         $this->assertEquals([],               $payload['products'][1]['coupons']);
         $this->assertEquals([],               $payload['products'][1]['tags']);
-        $this->assertEquals(null,             $payload['products'][1]['discount']);
+        $this->assertEquals([],               $payload['products'][1]['discounts']);
         $this->assertEquals(null,             $payload['products'][1]['category']);
         $this->assertEquals('£79.98',         $payload['products'][1]['total_value']);
         $this->assertEquals('£0.00',          $payload['products'][1]['total_discount']);
@@ -323,7 +323,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                $payload['products'][0]['delivery']);
         $this->assertEquals([],                     $payload['products'][0]['coupons']);
         $this->assertEquals([],                     $payload['products'][0]['tags']);
-        $this->assertEquals(null,                   $payload['products'][0]['discount']);
+        $this->assertEquals([],                     $payload['products'][0]['discounts']);
         $this->assertEquals('Physical Book',        $payload['products'][0]['category']);
         $this->assertEquals('£15.00',               $payload['products'][0]['total_value']);
         $this->assertEquals('£0.00',                $payload['products'][0]['total_discount']);
@@ -341,7 +341,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                $payload['products'][1]['delivery']);
         $this->assertEquals([],                     $payload['products'][1]['coupons']);
         $this->assertEquals([],                     $payload['products'][1]['tags']);
-        $this->assertEquals('10%',                  $payload['products'][1]['discount']);
+        $this->assertEquals('10%',                  $payload['products'][1]['discounts'][0]);
         $this->assertEquals(null,                   $payload['products'][1]['category']);
         $this->assertEquals('£999.99',              $payload['products'][1]['total_value']);
         $this->assertEquals('£100.00',              $payload['products'][1]['total_discount']);
@@ -359,7 +359,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.99',                $payload['products'][2]['delivery']);
         $this->assertEquals([],                     $payload['products'][2]['coupons']);
         $this->assertEquals([],                     $payload['products'][2]['tags']);
-        $this->assertEquals(null,                   $payload['products'][2]['discount']);
+        $this->assertEquals([],                     $payload['products'][2]['discounts']);
         $this->assertEquals(null,                   $payload['products'][2]['category']);
         $this->assertEquals('£75.00',               $payload['products'][2]['total_value']);
         $this->assertEquals('£0.00',                $payload['products'][2]['total_discount']);
@@ -393,7 +393,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                      $payload['products'][0]['delivery']);
         $this->assertEquals([],                           $payload['products'][0]['coupons']);
         $this->assertEquals([],                           $payload['products'][0]['tags']);
-        $this->assertEquals(null,                         $payload['products'][0]['discount']);
+        $this->assertEquals([],                           $payload['products'][0]['discounts']);
         $this->assertEquals(null,                         $payload['products'][0]['category']);
         $this->assertEquals('£10.00',                     $payload['products'][0]['total_value']);
         $this->assertEquals('£0.00',                      $payload['products'][0]['total_discount']);
@@ -411,7 +411,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                      $payload['products'][1]['delivery']);
         $this->assertEquals([],                           $payload['products'][1]['coupons']);
         $this->assertEquals([],                           $payload['products'][1]['tags']);
-        $this->assertEquals(null,                         $payload['products'][1]['discount']);
+        $this->assertEquals([],                           $payload['products'][1]['discounts']);
         $this->assertEquals(null,                         $payload['products'][1]['category']);
         $this->assertEquals('£4.99',                      $payload['products'][1]['total_value']);
         $this->assertEquals('£0.00',                      $payload['products'][1]['total_discount']);
@@ -429,7 +429,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£6.99',                      $payload['products'][2]['delivery']);
         $this->assertEquals([],                           $payload['products'][2]['coupons']);
         $this->assertEquals([],                           $payload['products'][2]['tags']);
-        $this->assertEquals('10%',                        $payload['products'][2]['discount']);
+        $this->assertEquals('10%',                        $payload['products'][2]['discounts'][0]);
         $this->assertEquals(null,                         $payload['products'][2]['category']);
         $this->assertEquals('£131.96',                    $payload['products'][2]['total_value']);
         $this->assertEquals('£13.20',                     $payload['products'][2]['total_discount']);
@@ -463,7 +463,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',           $payload['products'][0]['delivery']);
         $this->assertEquals([],                $payload['products'][0]['coupons']);
         $this->assertEquals([],                $payload['products'][0]['tags']);
-        $this->assertEquals('£15.00',          $payload['products'][0]['discount']);
+        $this->assertEquals('£15.00',          $payload['products'][0]['discounts'][0]);
         $this->assertEquals(null,              $payload['products'][0]['category']);
         $this->assertEquals('£49.50',          $payload['products'][0]['total_value']);
         $this->assertEquals('£15.00',          $payload['products'][0]['total_discount']);
@@ -481,7 +481,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£60.00',          $payload['products'][1]['delivery']);
         $this->assertEquals([],                $payload['products'][1]['coupons']);
         $this->assertEquals([],                $payload['products'][1]['tags']);
-        $this->assertEquals(null,              $payload['products'][1]['discount']);
+        $this->assertEquals([],                $payload['products'][1]['discounts']);
         $this->assertEquals(null,              $payload['products'][1]['category']);
         $this->assertEquals('£899.99',         $payload['products'][1]['total_value']);
         $this->assertEquals('£0.00',           $payload['products'][1]['total_discount']);
@@ -499,7 +499,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£6.99',           $payload['products'][2]['delivery']);
         $this->assertEquals([],                $payload['products'][2]['coupons']);
         $this->assertEquals([],                $payload['products'][2]['tags']);
-        $this->assertEquals('10%',             $payload['products'][2]['discount']);
+        $this->assertEquals('10%',             $payload['products'][2]['discounts'][0]);
         $this->assertEquals(null,              $payload['products'][2]['category']);
         $this->assertEquals('£131.96',         $payload['products'][2]['total_value']);
         $this->assertEquals('£13.20',          $payload['products'][2]['total_discount']);
@@ -533,7 +533,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',       $payload['products'][0]['delivery']);
         $this->assertEquals([],            $payload['products'][0]['coupons']);
         $this->assertEquals([],            $payload['products'][0]['tags']);
-        $this->assertEquals(null,          $payload['products'][0]['discount']);
+        $this->assertEquals([],            $payload['products'][0]['discounts']);
         $this->assertEquals(null,          $payload['products'][0]['category']);
         $this->assertEquals('£299.97',     $payload['products'][0]['total_value']);
         $this->assertEquals('£0.00',       $payload['products'][0]['total_discount']);
@@ -551,7 +551,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',       $payload['products'][1]['delivery']);
         $this->assertEquals([],            $payload['products'][1]['coupons']);
         $this->assertEquals([],            $payload['products'][1]['tags']);
-        $this->assertEquals(null,          $payload['products'][1]['discount']);
+        $this->assertEquals([],            $payload['products'][1]['discounts']);
         $this->assertEquals(null,          $payload['products'][1]['category']);
         $this->assertEquals('£4.99',       $payload['products'][1]['total_value']);
         $this->assertEquals('£0.00',       $payload['products'][1]['total_discount']);
@@ -569,7 +569,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',       $payload['products'][2]['delivery']);
         $this->assertEquals([],            $payload['products'][2]['coupons']);
         $this->assertEquals([],            $payload['products'][2]['tags']);
-        $this->assertEquals('10%',         $payload['products'][2]['discount']);
+        $this->assertEquals('10%',         $payload['products'][2]['discounts'][0]);
         $this->assertEquals(null,          $payload['products'][2]['category']);
         $this->assertEquals('£999.99',     $payload['products'][2]['total_value']);
         $this->assertEquals('£100.00',     $payload['products'][2]['total_discount']);
@@ -603,7 +603,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                      $payload['products'][0]['delivery']);
         $this->assertEquals([],                           $payload['products'][0]['coupons']);
         $this->assertEquals([],                           $payload['products'][0]['tags']);
-        $this->assertEquals(null,                         $payload['products'][0]['discount']);
+        $this->assertEquals([],                           $payload['products'][0]['discounts']);
         $this->assertEquals(null,                         $payload['products'][0]['category']);
         $this->assertEquals('£10.00',                     $payload['products'][0]['total_value']);
         $this->assertEquals('£0.00',                      $payload['products'][0]['total_discount']);
@@ -621,7 +621,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.00',                      $payload['products'][1]['delivery']);
         $this->assertEquals([],                           $payload['products'][1]['coupons']);
         $this->assertEquals([],                           $payload['products'][1]['tags']);
-        $this->assertEquals('£15.00',                     $payload['products'][1]['discount']);
+        $this->assertEquals('£15.00',                     $payload['products'][1]['discounts'][0]);
         $this->assertEquals(null,                         $payload['products'][1]['category']);
         $this->assertEquals('£49.50',                     $payload['products'][1]['total_value']);
         $this->assertEquals('£15.00',                     $payload['products'][1]['total_discount']);
@@ -639,7 +639,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£5.99',                      $payload['products'][2]['delivery']);
         $this->assertEquals([],                           $payload['products'][2]['coupons']);
         $this->assertEquals([],                           $payload['products'][2]['tags']);
-        $this->assertEquals(null,                         $payload['products'][2]['discount']);
+        $this->assertEquals([],                           $payload['products'][2]['discounts']);
         $this->assertEquals(null,                         $payload['products'][2]['category']);
         $this->assertEquals('£79.98',                     $payload['products'][2]['total_value']);
         $this->assertEquals('£0.00',                      $payload['products'][2]['total_discount']);
@@ -657,7 +657,7 @@ class ArrayTransfromerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('£0.99',                      $payload['products'][3]['delivery']);
         $this->assertEquals([],                           $payload['products'][3]['coupons']);
         $this->assertEquals([],                           $payload['products'][3]['tags']);
-        $this->assertEquals(null,                         $payload['products'][3]['discount']);
+        $this->assertEquals([],                           $payload['products'][3]['discounts']);
         $this->assertEquals(null,                         $payload['products'][3]['category']);
         $this->assertEquals('£75.00',                     $payload['products'][3]['total_value']);
         $this->assertEquals('£0.00',                      $payload['products'][3]['total_discount']);

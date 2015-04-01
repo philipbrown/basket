@@ -44,6 +44,12 @@ class Converter
     {
         if (! is_object($value)) return $value;
 
+        if ($value instanceof Collection) {
+            return $value->map(function ($item) {
+                return $this->formatter($item)->format($item);
+            })->toArray();
+        }
+
         return $this->formatter($value)->format($value);
     }
 

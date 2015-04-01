@@ -153,7 +153,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         $this->product->discount(new PercentageDiscount(20));
 
         $this->assertInstanceOf(
-            'PhilipBrown\Basket\Discounts\PercentageDiscount', $this->product->discount);
+            'PhilipBrown\Basket\Discounts\PercentageDiscount', $this->product->discounts->first());
     }
 
     /** @test */

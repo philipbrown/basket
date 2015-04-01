@@ -72,7 +72,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),    $products[0]['delivery']);
         $this->assertEquals(new Collection,                       $products[0]['coupons']);
         $this->assertEquals(new Collection,                       $products[0]['tags']);
-        $this->assertEquals(null,                                 $products[0]['discount']);
+        $this->assertEquals(null,                                 $products[0]['discounts']->first());
         $this->assertEquals(null,                                 $products[0]['category']);
         $this->assertEquals(new Money(0, new Currency('GBP')),    $products[0]['total_discount']);
         $this->assertEquals(new Money(0, new Currency('GBP')),    $products[0]['total_delivery']);
@@ -107,7 +107,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[0]['delivery']);
         $this->assertEquals(new Collection,                        $products[0]['coupons']);
         $this->assertEquals(new Collection,                        $products[0]['tags']);
-        $this->assertEquals(null,                                  $products[0]['discount']);
+        $this->assertEquals(null,                                  $products[0]['discounts']->first());
         $this->assertEquals(new PhysicalBook,                      $products[0]['category']);
         $this->assertEquals(new Money(1500, new Currency('GBP')),  $products[0]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[0]['total_discount']);
@@ -125,7 +125,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[1]['delivery']);
         $this->assertEquals(new Collection,                        $products[1]['coupons']);
         $this->assertEquals(new Collection,                        $products[1]['tags']);
-        $this->assertEquals(null,                                  $products[1]['discount']);
+        $this->assertEquals(null,                                  $products[1]['discounts']->first());
         $this->assertEquals(null,                                  $products[1]['category']);
         $this->assertEquals(new Money(29997, new Currency('GBP')), $products[1]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[1]['total_discount']);
@@ -161,7 +161,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[0]['delivery']);
         $this->assertEquals(new Collection,                         $products[0]['coupons']);
         $this->assertEquals(new Collection,                         $products[0]['tags']);
-        $this->assertEquals(null,                                   $products[0]['discount']);
+        $this->assertEquals(null,                                   $products[0]['discounts']->first());
         $this->assertEquals(null,                                   $products[0]['category']);
         $this->assertEquals(new Money(499, new Currency('GBP')),    $products[0]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[0]['total_discount']);
@@ -179,7 +179,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[1]['delivery']);
         $this->assertEquals(new Collection,                         $products[1]['coupons']);
         $this->assertEquals(new Collection,                         $products[1]['tags']);
-        $this->assertEquals(new PercentageDiscount(10),             $products[1]['discount']);
+        $this->assertEquals(new PercentageDiscount(10),             $products[1]['discounts']->first());
         $this->assertEquals(null,                                   $products[1]['category']);
         $this->assertEquals(new Money(99999, new Currency('GBP')),  $products[1]['total_value']);
         $this->assertEquals(new Money(10000, new Currency('GBP')),  $products[1]['total_discount']);
@@ -215,7 +215,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[0]['delivery']);
         $this->assertEquals(new Collection,                                          $products[0]['coupons']);
         $this->assertEquals(new Collection,                                          $products[0]['tags']);
-        $this->assertEquals(new PercentageDiscount(10),                              $products[0]['discount']);
+        $this->assertEquals(new PercentageDiscount(10),                              $products[0]['discounts']->first());
         $this->assertEquals(null,                                                    $products[0]['category']);
         $this->assertEquals(new Money(99999, new Currency('GBP')),                   $products[0]['total_value']);
         $this->assertEquals(new Money(10000, new Currency('GBP')),                   $products[0]['total_discount']);
@@ -233,7 +233,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[1]['delivery']);
         $this->assertEquals(new Collection,                                          $products[1]['coupons']);
         $this->assertEquals(new Collection,                                          $products[1]['tags']);
-        $this->assertEquals(new ValueDiscount(new Money(1500, new Currency('GBP'))), $products[1]['discount']);
+        $this->assertEquals(new ValueDiscount(new Money(1500, new Currency('GBP'))), $products[1]['discounts']->first());
         $this->assertEquals(null,                                                    $products[1]['category']);
         $this->assertEquals(new Money(4950, new Currency('GBP')),                    $products[1]['total_value']);
         $this->assertEquals(new Money(1500, new Currency('GBP')),                    $products[1]['total_discount']);
@@ -251,7 +251,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(6000, new Currency('GBP')),                    $products[2]['delivery']);
         $this->assertEquals(new Collection,                                          $products[2]['coupons']);
         $this->assertEquals(new Collection,                                          $products[2]['tags']);
-        $this->assertEquals(null,                                                    $products[2]['discount']);
+        $this->assertEquals(null,                                                    $products[2]['discounts']->first());
         $this->assertEquals(null,                                                    $products[2]['category']);
         $this->assertEquals(new Money(89999, new Currency('GBP')),                   $products[2]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[2]['total_discount']);
@@ -287,7 +287,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(699, new Currency('GBP')),   $products[0]['delivery']);
         $this->assertEquals(new Collection,                        $products[0]['coupons']);
         $this->assertEquals(new Collection,                        $products[0]['tags']);
-        $this->assertEquals(new PercentageDiscount(10),            $products[0]['discount']);
+        $this->assertEquals(new PercentageDiscount(10),            $products[0]['discounts']->first());
         $this->assertEquals(null,                                  $products[0]['category']);
         $this->assertEquals(new Money(13196, new Currency('GBP')), $products[0]['total_value']);
         $this->assertEquals(new Money(1320, new Currency('GBP')),  $products[0]['total_discount']);
@@ -305,7 +305,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(599, new Currency('GBP')),   $products[1]['delivery']);
         $this->assertEquals(new Collection,                        $products[1]['coupons']);
         $this->assertEquals(new Collection,                        $products[1]['tags']);
-        $this->assertEquals(null,                                  $products[1]['discount']);
+        $this->assertEquals(null,                                  $products[1]['discounts']->first());
         $this->assertEquals(null,                                  $products[1]['category']);
         $this->assertEquals(new Money(7998, new Currency('GBP')),  $products[1]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[1]['total_discount']);
@@ -341,7 +341,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[0]['delivery']);
         $this->assertEquals(new Collection,                         $products[0]['coupons']);
         $this->assertEquals(new Collection,                         $products[0]['tags']);
-        $this->assertEquals(null,                                   $products[0]['discount']);
+        $this->assertEquals(null,                                   $products[0]['discounts']->first());
         $this->assertEquals(new PhysicalBook,                       $products[0]['category']);
         $this->assertEquals(new Money(1500, new Currency('GBP')),   $products[0]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[0]['total_discount']);
@@ -359,7 +359,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[1]['delivery']);
         $this->assertEquals(new Collection,                         $products[1]['coupons']);
         $this->assertEquals(new Collection,                         $products[1]['tags']);
-        $this->assertEquals(new PercentageDiscount(10),             $products[1]['discount']);
+        $this->assertEquals(new PercentageDiscount(10),             $products[1]['discounts']->first());
         $this->assertEquals(null,                                   $products[1]['category']);
         $this->assertEquals(new Money(99999, new Currency('GBP')),  $products[1]['total_value']);
         $this->assertEquals(new Money(10000, new Currency('GBP')),  $products[1]['total_discount']);
@@ -377,7 +377,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(99, new Currency('GBP')),     $products[2]['delivery']);
         $this->assertEquals(new Collection,                         $products[2]['coupons']);
         $this->assertEquals(new Collection,                         $products[2]['tags']);
-        $this->assertEquals(null,                                   $products[2]['discount']);
+        $this->assertEquals(null,                                   $products[2]['discounts']->first());
         $this->assertEquals(null,                                   $products[2]['category']);
         $this->assertEquals(new Money(7500, new Currency('GBP')),   $products[2]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[2]['total_discount']);
@@ -413,7 +413,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[0]['delivery']);
         $this->assertEquals(new Collection,                        $products[0]['coupons']);
         $this->assertEquals(new Collection,                        $products[0]['tags']);
-        $this->assertEquals(null,                                  $products[0]['discount']);
+        $this->assertEquals(null,                                  $products[0]['discounts']->first());
         $this->assertEquals(null,                                  $products[0]['category']);
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[0]['total_discount']);
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[0]['total_delivery']);
@@ -430,7 +430,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[1]['delivery']);
         $this->assertEquals(new Collection,                        $products[1]['coupons']);
         $this->assertEquals(new Collection,                        $products[1]['tags']);
-        $this->assertEquals(null,                                  $products[1]['discount']);
+        $this->assertEquals(null,                                  $products[1]['discounts']->first());
         $this->assertEquals(null,                                  $products[1]['category']);
         $this->assertEquals(new Money(499, new Currency('GBP')),   $products[1]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),     $products[1]['total_discount']);
@@ -448,7 +448,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(699, new Currency('GBP')),   $products[2]['delivery']);
         $this->assertEquals(new Collection,                        $products[2]['coupons']);
         $this->assertEquals(new Collection,                        $products[2]['tags']);
-        $this->assertEquals(new PercentageDiscount(10),            $products[2]['discount']);
+        $this->assertEquals(new PercentageDiscount(10),            $products[2]['discounts']->first());
         $this->assertEquals(null,                                  $products[2]['category']);
         $this->assertEquals(new Money(13196, new Currency('GBP')), $products[2]['total_value']);
         $this->assertEquals(new Money(1320, new Currency('GBP')),  $products[2]['total_discount']);
@@ -484,7 +484,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[0]['delivery']);
         $this->assertEquals(new Collection,                                          $products[0]['coupons']);
         $this->assertEquals(new Collection,                                          $products[0]['tags']);
-        $this->assertEquals(new ValueDiscount(new Money(1500, new Currency('GBP'))), $products[0]['discount']);
+        $this->assertEquals(new ValueDiscount(new Money(1500, new Currency('GBP'))), $products[0]['discounts']->first());
         $this->assertEquals(null,                                                    $products[0]['category']);
         $this->assertEquals(new Money(4950, new Currency('GBP')),                    $products[0]['total_value']);
         $this->assertEquals(new Money(1500, new Currency('GBP')),                    $products[0]['total_discount']);
@@ -502,7 +502,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(6000, new Currency('GBP')),                    $products[1]['delivery']);
         $this->assertEquals(new Collection,                                          $products[1]['coupons']);
         $this->assertEquals(new Collection,                                          $products[1]['tags']);
-        $this->assertEquals(null,                                                    $products[1]['discount']);
+        $this->assertEquals(null,                                                    $products[1]['discounts']->first());
         $this->assertEquals(null,                                                    $products[1]['category']);
         $this->assertEquals(new Money(89999, new Currency('GBP')),                   $products[1]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[1]['total_discount']);
@@ -520,7 +520,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(699, new Currency('GBP')),                     $products[2]['delivery']);
         $this->assertEquals(new Collection,                                          $products[2]['coupons']);
         $this->assertEquals(new Collection,                                          $products[2]['tags']);
-        $this->assertEquals(new PercentageDiscount(10),                              $products[2]['discount']);
+        $this->assertEquals(new PercentageDiscount(10),                              $products[2]['discounts']->first());
         $this->assertEquals(null,                                                    $products[2]['category']);
         $this->assertEquals(new Money(13196, new Currency('GBP')),                   $products[2]['total_value']);
         $this->assertEquals(new Money(1320, new Currency('GBP')),                    $products[2]['total_discount']);
@@ -556,7 +556,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[0]['delivery']);
         $this->assertEquals(new Collection,                         $products[0]['coupons']);
         $this->assertEquals(new Collection,                         $products[0]['tags']);
-        $this->assertEquals(null,                                   $products[0]['discount']);
+        $this->assertEquals(null,                                   $products[0]['discounts']->first());
         $this->assertEquals(null,                                   $products[0]['category']);
         $this->assertEquals(new Money(29997, new Currency('GBP')),  $products[0]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[0]['total_discount']);
@@ -574,7 +574,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[1]['delivery']);
         $this->assertEquals(new Collection,                         $products[1]['coupons']);
         $this->assertEquals(new Collection,                         $products[1]['tags']);
-        $this->assertEquals(null,                                   $products[1]['discount']);
+        $this->assertEquals(null,                                   $products[1]['discounts']->first());
         $this->assertEquals(null,                                   $products[1]['category']);
         $this->assertEquals(new Money(499, new Currency('GBP')),    $products[1]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[1]['total_discount']);
@@ -592,7 +592,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),      $products[2]['delivery']);
         $this->assertEquals(new Collection,                         $products[2]['coupons']);
         $this->assertEquals(new Collection,                         $products[2]['tags']);
-        $this->assertEquals(new PercentageDiscount(10),             $products[2]['discount']);
+        $this->assertEquals(new PercentageDiscount(10),             $products[2]['discounts']->first());
         $this->assertEquals(null,                                   $products[2]['category']);
         $this->assertEquals(new Money(99999, new Currency('GBP')),  $products[2]['total_value']);
         $this->assertEquals(new Money(10000, new Currency('GBP')),  $products[2]['total_discount']);
@@ -628,7 +628,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[0]['delivery']);
         $this->assertEquals(new Collection,                                          $products[0]['coupons']);
         $this->assertEquals(new Collection,                                          $products[0]['tags']);
-        $this->assertEquals(null,                                                    $products[0]['discount']);
+        $this->assertEquals(null,                                                    $products[0]['discounts']->first());
         $this->assertEquals(null,                                                    $products[0]['category']);
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[0]['total_discount']);
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[0]['total_delivery']);
@@ -645,7 +645,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[1]['delivery']);
         $this->assertEquals(new Collection,                                          $products[1]['coupons']);
         $this->assertEquals(new Collection,                                          $products[1]['tags']);
-        $this->assertEquals(new ValueDiscount(new Money(1500, new Currency('GBP'))), $products[1]['discount']);
+        $this->assertEquals(new ValueDiscount(new Money(1500, new Currency('GBP'))), $products[1]['discounts']->first());
         $this->assertEquals(null,                                                    $products[1]['category']);
         $this->assertEquals(new Money(4950, new Currency('GBP')),                    $products[1]['total_value']);
         $this->assertEquals(new Money(1500, new Currency('GBP')),                    $products[1]['total_discount']);
@@ -663,7 +663,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(599, new Currency('GBP')),                     $products[2]['delivery']);
         $this->assertEquals(new Collection,                                          $products[2]['coupons']);
         $this->assertEquals(new Collection,                                          $products[2]['tags']);
-        $this->assertEquals(null,                                                    $products[2]['discount']);
+        $this->assertEquals(null,                                                    $products[2]['discounts']->first());
         $this->assertEquals(null,                                                    $products[2]['category']);
         $this->assertEquals(new Money(7998, new Currency('GBP')),                    $products[2]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[2]['total_discount']);
@@ -681,7 +681,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(99, new Currency('GBP')),                      $products[3]['delivery']);
         $this->assertEquals(new Collection,                                          $products[3]['coupons']);
         $this->assertEquals(new Collection,                                          $products[3]['tags']);
-        $this->assertEquals(null,                                                    $products[3]['discount']);
+        $this->assertEquals(null,                                                    $products[3]['discounts']->first());
         $this->assertEquals(null,                                                    $products[3]['category']);
         $this->assertEquals(new Money(7500, new Currency('GBP')),                    $products[3]['total_value']);
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[3]['total_discount']);
@@ -689,5 +689,31 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new Money(0, new Currency('GBP')),                       $products[3]['total_tax']);
         $this->assertEquals(new Money(297, new Currency('GBP')),                     $products[3]['subtotal']);
         $this->assertEquals(new Money(297, new Currency('GBP')),                     $products[3]['total']);
+    }
+
+    /** @test */
+    public function should_process_basket_fixture_ten()
+    {
+        $basket   = $this->fixtures->ten();
+        $basket->discount(new PercentageDiscount(20));
+
+        $order    = $this->processor->process($basket);
+        $meta     = $order->meta();
+        $products = $order->products();
+
+        $this->assertInstanceOf('PhilipBrown\Basket\Order',             $order);
+        $this->assertEquals(new Money(20200, new Currency('GBP')),      $meta['discount']);
+        $this->assertEquals(new Money(96959, new Currency('GBP')),      $meta['total']);
+        $this->assertEquals(new Money(100999, new Currency('GBP')),     $meta['value']);
+        $this->assertEquals('0',                                        $products[0]['sku']);
+        $this->assertEquals(new PercentageDiscount(20),                 $products[0]['discounts']->first());
+        $this->assertEquals(new Money(1000, new Currency('GBP')),       $products[0]['total_value']);
+        $this->assertEquals(new Money(200, new Currency('GBP')),        $products[0]['total_discount']);
+        $this->assertEquals(new Money(960, new Currency('GBP')),        $products[0]['total']);
+        $this->assertEquals('4',                                        $products[1]['sku']);
+        $this->assertEquals(new PercentageDiscount(20),                 $products[1]['discounts']->first());
+        $this->assertEquals(new Money(99999, new Currency('GBP')),      $products[1]['total_value']);
+        $this->assertEquals(new Money(20000, new Currency('GBP')),      $products[1]['total_discount']);
+        $this->assertEquals(new Money(95999, new Currency('GBP')),      $products[1]['total']);
     }
 }
