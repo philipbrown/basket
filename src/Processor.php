@@ -33,10 +33,28 @@ class Processor
      */
     public function process(Basket $basket)
     {
+        $this->discount($basket);
         $meta     = $this->meta($basket);
         $products = $this->products($basket);
 
         return new Order($meta, $products);
+    }
+
+    /**
+     * Set Basket wide discount
+     *
+     * @param Basket $basket
+     * @return array
+     */
+    public function discount(Basket $basket)
+    {
+        if ($basket->discount) {
+            foreach ($basket->products() as $product) {
+                $basket->update($product->sku, function ($product) use ($basket) {
+                    $product->discount($basket->discount);
+                });
+            }
+        }
     }
 
     /**
@@ -78,7 +96,7 @@ class Processor
                 'delivery'       => $product->delivery,
                 'coupons'        => $product->coupons,
                 'tags'           => $product->tags,
-                'discount'       => $product->discount,
+                'discounts'      => $product->discounts,
                 'category'       => $product->category,
                 'total_value'    => $this->reconciler->value($product),
                 'total_discount' => $this->reconciler->discount($product),

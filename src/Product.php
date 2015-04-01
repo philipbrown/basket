@@ -56,9 +56,9 @@ class Product
     private $tags;
 
     /**
-     * @var Discount
+     * @var Collection
      */
-    private $discount;
+    private $discounts;
 
     /**
      * @var Category
@@ -76,16 +76,17 @@ class Product
      */
     public function __construct($sku, $name, Money $price, TaxRate $rate)
     {
-        $this->sku      = $sku;
-        $this->name     = $name;
-        $this->price    = $price;
-        $this->rate     = $rate;
-        $this->quantity = 1;
-        $this->freebie  = false;
-        $this->taxable  = true;
-        $this->delivery = new Money(0, $price->getCurrency());
-        $this->coupons  = new Collection;
-        $this->tags     = new Collection;
+        $this->sku          = $sku;
+        $this->name         = $name;
+        $this->price        = $price;
+        $this->rate         = $rate;
+        $this->quantity     = 1;
+        $this->freebie      = false;
+        $this->taxable      = true;
+        $this->delivery     = new Money(0, $price->getCurrency());
+        $this->coupons      = new Collection;
+        $this->tags         = new Collection;
+        $this->discounts    = new Collection;
     }
 
     /**
@@ -184,7 +185,7 @@ class Product
      */
     public function discount(Discount $discount)
     {
-        $this->discount = $discount;
+        $this->discounts->add(0, $discount);
     }
 
     /**

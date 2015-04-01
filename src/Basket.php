@@ -20,6 +20,11 @@ class Basket
     private $products;
 
     /**
+     * @var Discount
+     */
+    private $discount;
+
+    /**
      * Create a new Basket
      *
      * @param Jurisdiction $jurisdiction
@@ -60,6 +65,19 @@ class Basket
     public function products()
     {
         return $this->products;
+    }
+
+    /**
+     * Get the private attributes
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if (property_exists($this, $key)) {
+            return $this->$key;
+        }
     }
 
     /**
@@ -119,5 +137,16 @@ class Basket
         $product = $this->pick($sku);
 
         $this->products->remove($sku);
+    }
+
+    /**
+     * Set a discount
+     *
+     * @param Discount $discount
+     * @return void
+     */
+    public function discount(Discount $discount)
+    {
+        $this->discount = $discount;
     }
 }
