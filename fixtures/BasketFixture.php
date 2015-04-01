@@ -253,9 +253,9 @@ class BasketFixture
      * Value:    £1009.99
      * Delivery: £0
      * Discount: £202
-     * Tax:      £182
-     * Subtotal: £909.99
-     * Total:    £1091.99
+     * Tax:      £161.60
+     * Subtotal: £807.99
+     * Total:    £969.59
      *
      * @return Basket
      */
