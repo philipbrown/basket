@@ -25,14 +25,13 @@ class DefaultReconciler implements Reconciler
      */
     public function discount(Product $product)
     {
-        $discount = $this->money($product);
+        $money = $this->money($product);
 
-        if ($product->discount) {
-            $discount = $product->discount->product($product);
-            $discount = $discount->multiply($product->quantity);
+        foreach ($product->discounts as $discount) {
+            $money = $money->add($discount->product($product)->multiply($product->quantity));
         }
 
-        return $discount;
+        return $money;
     }
 
     /**

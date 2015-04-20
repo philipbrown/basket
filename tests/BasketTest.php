@@ -4,6 +4,8 @@ use Money\Money;
 use Money\Currency;
 use PhilipBrown\Basket\Basket;
 use PhilipBrown\Basket\Jurisdictions\UnitedKingdom;
+use PhilipBrown\Basket\Product;
+use PhilipBrown\Basket\Discounts\PercentageDiscount;
 
 class BasketTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,10 +14,13 @@ class BasketTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $this->basket = new Basket(new UnitedKingdom);
+
         $sku  = '1';
         $name = 'The Lion King';
-        $this->basket = new Basket(new UnitedKingdom);
-        $this->basket->add($sku, $name, new Money(1000, new Currency('GBP')));
+        $product = new Product($sku, $name, new Money(1000, new Currency('GBP')), $this->basket->rate());
+
+        $this->basket->add($product);
     }
 
     /** @test */
@@ -52,7 +57,9 @@ class BasketTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function should_add_a_product()
     {
-        $this->basket->add('2', 'Die Hard', new Money(1000, new Currency('GBP')));
+        $product = new Product('2', 'Die Hard', new Money(1000, new Currency('GBP')), $this->basket->rate());
+
+        $this->basket->add($product);
 
         $this->assertEquals(2, $this->basket->count());
     }
@@ -75,5 +82,13 @@ class BasketTest extends \PHPUnit_Framework_TestCase
         $this->basket->remove('1');
 
         $this->assertEquals(0, $this->basket->count());
+    }
+
+    /** @test */
+    public function should_add_a_discount()
+    {
+        $this->basket->discount(new PercentageDiscount(20));
+
+        $this->assertEquals(20, $this->basket->discount->rate()->int());
     }
 }

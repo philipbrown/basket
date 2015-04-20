@@ -2,6 +2,7 @@
 
 use PhilipBrown\Basket\Basket;
 use PhilipBrown\Basket\Jurisdictions\UnitedKingdom;
+use PhilipBrown\Basket\Product;
 
 class BasketFixture
 {
@@ -247,6 +248,28 @@ class BasketFixture
     }
 
     /**
+     * Products: 2
+     * Taxable:  2
+     * Value:    £1009.99
+     * Delivery: £0
+     * Discount: £202
+     * Tax:      £161.60
+     * Subtotal: £807.99
+     * Total:    £969.59
+     *
+     * @return Basket
+     */
+    public function ten()
+    {
+        $basket = new Basket(new UnitedKingdom);
+
+        $basket = $this->addProductZero($basket);
+        $basket = $this->addProductFour($basket);
+
+        return $basket;
+    }
+
+    /**
      * Add Product Zero
      *
      * @param Basket $basket
@@ -256,7 +279,9 @@ class BasketFixture
     {
         $zero = $this->products->zero();
 
-        $basket->add($zero->sku, $zero->name, $zero->price);
+        $product = new Product($zero->sku, $zero->name, $zero->price, $basket->rate());
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -271,9 +296,12 @@ class BasketFixture
     {
         $one = $this->products->one();
 
-        $basket->add($one->sku, $one->name, $one->price, function ($product) use ($one) {
+        $product = new Product($one->sku, $one->name, $one->price, $basket->rate());
+        $product->action(function ($product) use ($one) {
             $product->category($one->category);
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -288,9 +316,12 @@ class BasketFixture
     {
         $two = $this->products->two();
 
-        $basket->add($two->sku, $two->name, $two->price, function ($product) use ($two) {
+        $product = new Product($two->sku, $two->name, $two->price, $basket->rate());
+        $product->action(function ($product) use ($two) {
             $product->quantity($two->quantity);
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -305,9 +336,12 @@ class BasketFixture
     {
         $three = $this->products->three();
 
-        $basket->add($three->sku, $three->name, $three->price, function ($product) use ($three) {
+        $product = new Product($three->sku, $three->name, $three->price, $basket->rate());
+        $product->action(function ($product) use ($three) {
             $product->freebie($three->freebie);
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -322,9 +356,12 @@ class BasketFixture
     {
         $four = $this->products->four();
 
-        $basket->add($four->sku, $four->name, $four->price, function ($product) use ($four) {
-            $product->discount($four->discount);
+        $product = new Product($four->sku, $four->name, $four->price, $basket->rate());
+        $product->action(function ($product) use ($four) {
+            $product->discount($four->discounts->first());
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -339,9 +376,12 @@ class BasketFixture
     {
         $five = $this->products->five();
 
-        $basket->add($five->sku, $five->name, $five->price, function ($product) use ($five) {
-            $product->discount($five->discount);
+        $product = new Product($five->sku, $five->name, $five->price, $basket->rate());
+        $product->action(function ($product) use ($five) {
+            $product->discount($five->discounts->first());
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -356,9 +396,12 @@ class BasketFixture
     {
         $six = $this->products->six();
 
-        $basket->add($six->sku, $six->name, $six->price, function ($product) use ($six) {
+        $product = new Product($six->sku, $six->name, $six->price, $basket->rate());
+        $product->action(function ($product) use ($six) {
             $product->delivery($six->delivery);
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -373,11 +416,14 @@ class BasketFixture
     {
         $seven = $this->products->seven();
 
-        $basket->add($seven->sku, $seven->name, $seven->price, function ($product) use ($seven) {
+        $product = new Product($seven->sku, $seven->name, $seven->price, $basket->rate());
+        $product->action(function ($product) use ($seven) {
             $product->quantity($seven->quantity);
-            $product->discount($seven->discount);
+            $product->discount($seven->discounts->first());
             $product->delivery($seven->delivery);
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -392,11 +438,14 @@ class BasketFixture
     {
         $eight = $this->products->eight();
 
-        $basket->add($eight->sku, $eight->name, $eight->price, function ($product) use ($eight) {
+        $product = new Product($eight->sku, $eight->name, $eight->price, $basket->rate());
+        $product->action(function ($product) use ($eight) {
             $product->quantity($eight->quantity);
             $product->taxable($eight->taxable);
             $product->delivery($eight->delivery);
         });
+
+        $basket->add($product);
 
         return $basket;
     }
@@ -411,11 +460,34 @@ class BasketFixture
     {
         $nine = $this->products->nine();
 
-        $basket->add($nine->sku, $nine->name, $nine->price, function ($product) use ($nine) {
+        $product = new Product($nine->sku, $nine->name, $nine->price, $basket->rate());
+        $product->action(function ($product) use ($nine) {
             $product->quantity($nine->quantity);
             $product->freebie($nine->freebie);
             $product->delivery($nine->delivery);
         });
+
+        $basket->add($product);
+
+        return $basket;
+    }
+
+    /**
+     * Add Product Ten
+     *
+     * @param Basket $basket
+     * @return Basket
+     */
+    private function addProductTen(Basket $basket)
+    {
+        $five = $this->products->ten();
+
+        $product = new Product($five->sku, $five->name, $five->price, $basket->rate());
+        $product->action(function ($product) use ($five) {
+            $product->discount($five->discounts->first());
+        });
+
+        $basket->add($product);
 
         return $basket;
     }

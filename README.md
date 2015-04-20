@@ -216,9 +216,10 @@ PhilipBrown\Basket\Discounts\PercentageDiscount;
 $product->discount(new PercentageDiscount(20));
 $product->discount(new ValueDiscount(new Money(500, new Currency('GBP'))));
 
-// Return the `Discount` instance
-$product->discount;
+// Return the `Collection` of `Discount` instances
+$product->discounts;
 ```
+There is a limitation at discounts, only one discount allowed for a product, if there was another discount in the Collection, that it will be overwritten. So the `$product->discount` always will be return with only one discount.
 
 ### Categories
 If you want to apply a set of rules to all products of a certain type, you can define a category object that can be applied to a `Product` instance.
@@ -234,6 +235,13 @@ interface Category
      * @return void
      */
     public function categorise(Product $product);
+    
+    /**
+     * Return the name of the Category
+     *
+     * @return string
+     */
+    public function name();
 }
 ```
 
@@ -290,25 +298,11 @@ $basket->products()->filter(function ($product) {
 });
 ```
 
-To add a product to the basket, pass the SKU, name and price to the add() method:
+To add a product to the basket, pass a Product object to the add() method:
 ```php
-$sku   = 'abc123';
-$name  = 'The Lion King';
-$price = new Money(1000, new Currency('GBP'));
+$product = new Product('abc123', 'The Lion King', new Money(1000, new Currency('GBP'), $basket->rate());
 
-$basket->add($sku, $name, $price);
-```
-
-You can also optionally pass a fourth parameter of a `Closure` to run actions on the new product:
-```php
-$sku   = 'abc123';
-$name  = 'The Lion King';
-$price = new Money(1000, new Currency('GBP'));
-
-$basket->add($sku, $name, $price, function ($product) {
-    $product->quantity(3);
-    $product->discount(new PercentageDiscount(20));
-});
+$basket->add($product);
 ```
 
 To update a product, pass the SKU and a `Closure` of actions to the `update()` method:
@@ -322,6 +316,18 @@ To remove a product, pass the SKU to the `remove()` method:
 ```php
 $basket->remove('abc123');
 ```
+
+To add a basket wide discount to reduce the price of all products:
+```php
+PhilipBrown\Basket\Discounts\PercentageDiscount;
+
+$basket->discount(new PercentageDiscount(20));
+
+// Return the `Discount` instance
+$basket->discount;
+```
+The basket discount will be overwrite the product discounts.
+
 
 ## Reconciliation
 Each `Product` object is the product in it's current state. In order to calculate the various totals that an ecommerce application will require, we need to pass it through a reconciliation process.
