@@ -142,6 +142,17 @@ class Product
     }
 
     /**
+     * Set the tax rate
+     *
+     * @param int $rate
+     * @return void
+     */
+    public function rate($rate)
+    {
+        $this->rate = $rate;
+    }
+
+    /**
      * Set the delivery charge
      *
      * @param Money $cost
