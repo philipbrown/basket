@@ -227,14 +227,14 @@ class Product
 
 
     /**
-     * Set a attribute
+     * Add a attribute
      *
      * @param string $key
      * @param mixed  $value
      *
      * @return void
      */
-    public function attribute($key, $value)
+    public function attributes($key, $value)
     {
         $this->attributes->add($key, $value);
     }
