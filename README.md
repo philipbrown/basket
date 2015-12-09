@@ -186,6 +186,17 @@ $product->tags;
 
 The `tags` class property is also an instance of `Collection`.
 
+### Attributes
+Similar to tags, attributes allow you to set an attribute to a product:
+```php
+$product->attributes('key', 'value');
+
+// Return the `attributes` Collection
+$product->attributes;
+```
+
+The `attributes` class property is also an instance of `Collection`.
+
 ### Discounts
 Discounts are objects that can be applied during the reconciliation process to reduce the price of a product. Each discount object should implement the `Discount` interface:
 ```php
