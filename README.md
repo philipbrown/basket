@@ -442,6 +442,7 @@ Once you are ready to process the items in the `Basket` and turn it into an immu
 ```php
 use PhilipBrown\Basket\MetaData\TotalMetaData;
 use PhilipBrown\Basket\MetaData\ProductsMetaData;
+use PhilipBrown\Basket\Processor;
 use PhilipBrown\Basket\Reconcilers\DefaultReconciler;
 
 $reconciler = new DefaultReconciler;
