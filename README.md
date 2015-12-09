@@ -210,8 +210,8 @@ interface Discount
 
 There are two discount objects supplied with this package that allow you to set a value discount or a percentage discount:
 ```php
-PhilipBrown\Basket\Discounts\ValueDiscount;
-PhilipBrown\Basket\Discounts\PercentageDiscount;
+use PhilipBrown\Basket\Discounts\ValueDiscount;
+use PhilipBrown\Basket\Discounts\PercentageDiscount;
 
 $product->discount(new PercentageDiscount(20));
 $product->discount(new ValueDiscount(new Money(500, new Currency('GBP'))));
