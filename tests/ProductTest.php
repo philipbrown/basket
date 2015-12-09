@@ -74,6 +74,14 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(5, $this->product->quantity);
     }
+    
+    /** @test */
+    public function should_set_the_rate()
+    {
+        $this->product->rate(20);
+
+        $this->assertEquals(20, $this->product->rate);
+    }
 
     /** @test */
     public function should_return_the_freebie_status()
