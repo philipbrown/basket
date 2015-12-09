@@ -5,6 +5,7 @@ use Money\Money;
 
 class Product
 {
+
     /**
      * @var string
      */
@@ -66,38 +67,49 @@ class Product
     private $category;
 
     /**
+     * @var Collection
+     */
+    private $attributes;
+
+
+    /**
      * Create a new Product
      *
-     * @param string $sku
-     * @param string $name
-     * @param Money $price
+     * @param string  $sku
+     * @param string  $name
+     * @param Money   $price
      * @param TaxRate $rate
+     *
      * @return void
      */
     public function __construct($sku, $name, Money $price, TaxRate $rate)
     {
-        $this->sku      = $sku;
-        $this->name     = $name;
-        $this->price    = $price;
-        $this->rate     = $rate;
-        $this->quantity = 1;
-        $this->freebie  = false;
-        $this->taxable  = true;
-        $this->delivery = new Money(0, $price->getCurrency());
-        $this->coupons  = new Collection;
-        $this->tags     = new Collection;
+        $this->sku        = $sku;
+        $this->name       = $name;
+        $this->price      = $price;
+        $this->rate       = $rate;
+        $this->quantity   = 1;
+        $this->freebie    = false;
+        $this->taxable    = true;
+        $this->delivery   = new Money(0, $price->getCurrency());
+        $this->coupons    = new Collection;
+        $this->tags       = new Collection;
+        $this->attributes = new Collection;
     }
+
 
     /**
      * Set the quantity
      *
      * @param int $quantity
+     *
      * @return void
      */
     public function quantity($quantity)
     {
         $this->quantity = $quantity;
     }
+
 
     /**
      * Increment the quantity
@@ -109,6 +121,7 @@ class Product
         $this->quantity++;
     }
 
+
     /**
      * Decrement the quantity
      *
@@ -119,10 +132,12 @@ class Product
         $this->quantity--;
     }
 
+
     /**
      * Set the freebie status
      *
      * @param bool $status
+     *
      * @return void
      */
     public function freebie($status)
@@ -130,10 +145,12 @@ class Product
         $this->freebie = $status;
     }
 
+
     /**
      * Set the taxable status
      *
      * @param bool $status
+     *
      * @return void
      */
     public function taxable($status)
@@ -141,10 +158,12 @@ class Product
         $this->taxable = $status;
     }
 
+
     /**
      * Set the tax rate
      *
      * @param int $rate
+     *
      * @return void
      */
     public function rate($rate)
@@ -152,10 +171,12 @@ class Product
         $this->rate = $rate;
     }
 
+
     /**
      * Set the delivery charge
      *
      * @param Money $cost
+     *
      * @return void
      */
     public function delivery(Money $delivery)
@@ -165,10 +186,12 @@ class Product
         }
     }
 
+
     /**
      * Add a coupon
      *
      * @param string $coupon
+     *
      * @return void
      */
     public function coupons($coupon)
@@ -176,10 +199,12 @@ class Product
         $this->coupons->push($coupon);
     }
 
+
     /**
      * Add a tag
      *
      * @param string $tag
+     *
      * @return void
      */
     public function tags($tag)
@@ -187,10 +212,12 @@ class Product
         $this->tags->push($tag);
     }
 
+
     /**
      * Set a discount
      *
      * @param Discount $discount
+     *
      * @return void
      */
     public function discount(Discount $discount)
@@ -198,10 +225,26 @@ class Product
         $this->discount = $discount;
     }
 
+
+    /**
+     * Set a attribute
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return void
+     */
+    public function attribute($key, $value)
+    {
+        $this->attributes->add($key, $value);
+    }
+
+
     /**
      * Set a category
      *
      * @param Category $category
+     *
      * @return void
      */
     public function category(Category $category)
@@ -211,10 +254,12 @@ class Product
         $this->category->categorise($this);
     }
 
+
     /**
      * Run a Closure of actions
      *
      * @param Closue $actions
+     *
      * @return void
      */
     public function action(Closure $actions)
@@ -222,16 +267,22 @@ class Product
         call_user_func($actions, $this);
     }
 
+
     /**
      * Get the private attributes
      *
      * @param string $key
+     *
      * @return mixed
      */
     public function __get($key)
     {
         if (property_exists($this, $key)) {
             return $this->$key;
+        }
+
+        if ($this->attributes->has($key)) {
+            return $this->attributes->get($key);
         }
     }
 }
