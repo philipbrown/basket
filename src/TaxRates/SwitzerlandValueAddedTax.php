@@ -16,7 +16,7 @@ class SwitzerlandValueAddedTax implements TaxRate
      */
     public function __construct()
     {
-        $this->rate = 0.8;
+        $this->rate = 0.08;
     }
 
     /**

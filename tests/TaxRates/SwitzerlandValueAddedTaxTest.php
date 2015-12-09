@@ -15,7 +15,7 @@ class SwitzerlandValueAddedTaxTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function should_return_rate_as_float()
     {
-        $this->assertEquals(0.8, $this->rate->float());
+        $this->assertEquals(0.08, $this->rate->float());
     }
 
     /** @test */
