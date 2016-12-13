@@ -1,6 +1,10 @@
 <?php namespace PhilipBrown\Basket\Tests;
 
+use Money\Currency;
+use Money\Money;
 use PhilipBrown\Basket\Collection;
+use PhilipBrown\Basket\Product;
+use PhilipBrown\Basket\TaxRates\BelgiumValueAddedTax;
 
 class CollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -182,5 +186,37 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     public function should_return_collection_as_array()
     {
         $this->assertEquals($this->items, $this->collection->toArray());
+    }
+
+    /** @test */
+    public function it_should_return_a_dictionary()
+    {
+        $products = [
+            'product1' => new Product('1', 'Product 1', new Money(10, new Currency('EUR')), new BelgiumValueAddedTax()),
+            'product2' => new Product('2', 'Product 2', new Money(10, new Currency('EUR')), new BelgiumValueAddedTax()),
+            'product3' => new Product('3', 'Product 3', new Money(10, new Currency('EUR')), new BelgiumValueAddedTax()),
+        ];
+        $productCollection = new Collection($products);
+
+        $dictionary = $productCollection->getDictionary();
+
+        $this->assertArrayHasKey(1, $dictionary);
+        $this->assertArrayHasKey(2, $dictionary);
+        $this->assertArrayHasKey(3, $dictionary);
+    }
+
+    /** @test */
+    public function it_should_return_a_dictionary_when_items_are_given()
+    {
+        $products = [
+            'product1' => new Product('1', 'Product 1', new Money(10, new Currency('EUR')), new BelgiumValueAddedTax()),
+            'product2' => new Product('2', 'Product 2', new Money(10, new Currency('EUR')), new BelgiumValueAddedTax()),
+            'product3' => new Product('3', 'Product 3', new Money(10, new Currency('EUR')), new BelgiumValueAddedTax()),
+        ];
+        $dictionary = (new Collection)->getDictionary($products);
+
+        $this->assertArrayHasKey(1, $dictionary);
+        $this->assertArrayHasKey(2, $dictionary);
+        $this->assertArrayHasKey(3, $dictionary);
     }
 }

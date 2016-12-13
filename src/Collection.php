@@ -276,4 +276,23 @@ class Collection implements Countable, IteratorAggregate
     {
         return new ArrayIterator($this->items);
     }
+
+    /**
+     * Get a dictionary keyed by sku
+     *
+     * @param  \ArrayAccess|array  $items
+     * @return array
+     */
+    public function getDictionary($items = null)
+    {
+        $items = is_null($items) ? $this->items : $items;
+
+        $dictionary = [];
+
+        foreach ($items as $item) {
+            $dictionary[$item->sku] = $item;
+        }
+
+        return $dictionary;
+    }
 }
